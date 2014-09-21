@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/fiction/!svn/ver/51/1/crawler
+END
+tests.py
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/fiction/!svn/ver/7/1/crawler/tests.py
+END
+.spider_thread.py.swo
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/fiction/!svn/ver/7/1/crawler/.spider_thread.py.swo
+END
+spider_thread.pyx
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/fiction/!svn/ver/7/1/crawler/spider_thread.pyx
+END
+.crawler_config.py.swo
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/fiction/!svn/ver/7/1/crawler/.crawler_config.py.swo
+END
+test_list.py
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/fiction/!svn/ver/7/1/crawler/test_list.py
+END
+spider_thread.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/fiction/!svn/ver/51/1/crawler/spider_thread.py
+END
+test.py
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/fiction/!svn/ver/7/1/crawler/test.py
+END
+test_book360.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/fiction/!svn/ver/7/1/crawler/test_book360.py
+END
+models.py
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/fiction/!svn/ver/7/1/crawler/models.py
+END
+crawler_config.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/fiction/!svn/ver/7/1/crawler/crawler_config.py
+END
+.crawler.py.swo
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/fiction/!svn/ver/7/1/crawler/.crawler.py.swo
+END
+debug.py
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/fiction/!svn/ver/7/1/crawler/debug.py
+END
+start.py
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/fiction/!svn/ver/7/1/crawler/start.py
+END
+views.py
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/fiction/!svn/ver/7/1/crawler/views.py
+END
+crawler.py
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/fiction/!svn/ver/13/1/crawler/crawler.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/fiction/!svn/ver/7/1/crawler/__init__.py
+END

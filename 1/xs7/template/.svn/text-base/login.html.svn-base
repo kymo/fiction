@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+登录启书
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{%block main %}
+
+       <div class="row">
+            <div class="well clearfix">
+                <form class="form-horizontal user_form" method = 'POST' action = '/login/'>
+                {% csrf_token %}
+                    <fieldset>
+                        <legend>登录</legend>
+                        <div class="control-group">
+                            <label class="control-label" for="input01">用户名:</label>
+                            <div class="controls">
+                                <input type="text" class="input-large" id="input01" name = 'name'></div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="input01">密码:</label>
+                            <div class="controls">
+                                <input type="password" class="input-large" name = 'password' id="input01"></div>
+                        </div>
+                        <div class="control-group">
+                            <label class="l-label" for="optionsCheckbox"></label>
+                            <div class="controls">
+                                <label class="checkbox">
+                                    <input type="checkbox" id="optionsCheckbox" name = 'remember'>
+                                    记住我
+                                    <a href="#">忘记密码</a>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <input type ='submit' class="btn btn-primary" value = '登录'><span style='margin-left:10px;color:red'>{{msg}}</span>
+                            </div> 
+                        </div>
+                    </fieldset>
+                </form>
+                <div class="user_tips">
+                    <p>还没有帐号吗？</p>
+                    <p>
+                        <a href="/register/">注册新用户！</a>
+                    </p>
+                    <div class="site">
+                        <p>相关链接</p>
+                        <p><a href = www.xs7.com'>www.xs7.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+

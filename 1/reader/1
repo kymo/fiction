@@ -1,0 +1,41 @@
+# Create your views here.
+#encoding: utf-8
+from django.http import HttpResponse, HttpResponseRedirect
+from django.template import RequestContext
+from django.shortcuts import render_to_response as RTR
+from utils.hashs import create_nid
+import hashlib
+from reader.models import Account
+def register(request):
+    if request.method == 'GET':
+        return RTR('register.html', {}, context_instance = RequestContext(request))
+
+    email = request.POST.get('email', '')
+    password = request.POST.get('password', '')
+    name = request.POST.get('name', '')
+    print email, password, name
+    if True:
+        user = Account(name = name,
+            password = hashlib.md5(password).hexdigest(),
+            is_active = '0',
+            email = email,
+            )
+        user.save()
+        user.nid = create_nid(user.id)
+        user.save()
+    else:
+        return HttpResponse("服务器故障,请稍候再试<a href = '%s'>返回<a/>" % request.META['HTTP_REFERER'])
+    #register success
+
+def error(request):
+    
+    return HttpResponse('error')
+def index(request):
+    
+    #index page
+    if request.user.id_authenticated:
+        print 'y'
+    else:
+        print 'n'
+
+

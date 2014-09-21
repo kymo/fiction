@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name = "keywords" content = "XS7,玄幻小说,小说搜索,启书,搜索阅读网,小说阅读网,最新章节,最快更新">
+    <meta name = "description" content = "启书小说搜索提供最新，最全，最快的小说搜索服务，快速查找最新章节，丰富的小说分类，热搜，推荐以及专题，专业多元的排行榜单，为您提供一站式的阅读服务">
+    <title>
+    
+    {% block title %}
+    {% endblock %}
+    </title>
+    
+
+    <link href="/site_media/css/bootstrap.css" rel="stylesheet">
+    <link href="/site_media/css/style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/site_media/image/icon.png"></head>
+    {% block css %}
+    {% endblock %}
+<style>
+body{
+background:#edf1f5;
+font-family:微软雅黑,黑体;}
+.header
+{
+    position:fixed;
+    z-index:10;
+    width:100%; 
+    height:50px;
+    background:#fff;
+}
+.header a:hover
+{
+    color:#f56200;
+}
+.header a
+{
+    color:#222;
+    font-weight:bold;
+    font-size:14px;
+    font-family:微软雅黑,黑体;
+}
+.main
+{
+    padding-top:70px;
+}
+.nav-list li
+{
+    margin-right:20px;
+}
+.nav-list
+{
+    padding:0px;
+}
+</style>
+<body>
+    <div class="header">
+        <div class="nav-list clearfix">
+            <ul class="nav-items fl">
+                <li style="*display:inline;" id='index_page'>
+                    <a href="/">首页</a>
+                </li>
+                 <li style="*display:inline;"id = 'member_page'>
+                    <a href="/member/">
+                    个人中心</a>
+                </li>
+                <!--
+                    <li>
+                    <a href="/board/">排行榜</a>
+                </li>
+                -->
+                <li style="*display:inline;"id = 'category_page'>
+                    <a href="/category/">分类浏览</a>
+                </li>
+               <li style="*display:inline;"id = 'help_page'>
+                    <a href="/help/">帮助服务</a>
+                </li>
+               <li style="*display:inline;" id = 'iknow_page'>
+                    <a href="/iknow/">书咖</a>
+                </li>
+            </ul>
+            <ul class="nav-items fr" style='margin-right:40px;'>
+                {% if is_auth %}
+                    <li id = 'dl'>
+                   <a style='color:#8b6f4f;' href='/{{user.nid}}/'> {{user.name}} </a>
+                    <a href= '/logout/' style='margin-left:10px;'>退出</a>
+                    </li>
+                {% else %}
+                <li style='*display:inline;' id="dl">
+                    <a href="/login/">登录</a>
+                    <span></span><a href="/register/">注册</a>
+                </li>
+                {% endif %}
+
+
+            </ul>
+        </div>
+    </div>
+    <div class='main'>
+        <div class="container">
+            {% block main %}
+            {% endblock %}
+            <div class="footer" style='font-family:微软雅黑,黑体;'>
+                <div class="inner clearfix">
+                    <div class="copyright">
+                        © 2012 - 2013  xs7.com, all rights reserved 沪ICP备13022920号
+                        <br></div>
+                    <div class="ft-nav">
+                        <a href="/contact/">联系我们</a>
+                        ·
+                        <a href="/version/">版权声明</a>
+                        ·
+                        <a href="/feedback/">使用反馈</a>
+                        
+                        <div style="display:none"><script src="http://s9.cnzz.com/stat.php?id=5412207&web_id=5412207" language="JavaScript"></script></div>
+
+                        <div style="display:none"><script type="text/javascript">
+
+                            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F109c11401cac4a8654c785bfe927605c' type='text/javascript'%3E%3C/script%3E"));
+
+    </script></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Load JS here for greater good =============================-->
+    <script src="/site_media/js/jquery.js"></script>
+    <script src="/site_media/js/bootstrap.js" type="text/javascript"></script>
+    <script src="/site_media/js/base.js" type="text/javascript"></script>
+    <script src="/site_media/js/jquery.cookie.js" type="text/javascript"></script>
+    <script>
+        var browser = navigator.appName;
+        var b_version = navigator.appVersion;
+        var version = b_version.split(";");
+   </script> 
+    
+    {% block js %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,323 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+小说分类浏览-小说分类浏览
+{% endblock %}
+
+{% block css %}
+<style>
+
+.cover
+{
+    width: 60px;
+}
+
+.cover img
+{
+    width:60px;
+    height:80px;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="row">
+            <div class="span8">
+                <div class="cate-nav">
+                    <ul>
+                        <li><a id='by_popular' href="javascript:void(0);">热度排序</a></li>
+                        <li><a id = 'by_time' href="javascript:void(0);">时间排序</a></li>
+                        <li><img id='loading_gif' style='display:none;' src = '/site_media/image/loading.gif'></li>
+                    </ul>
+                </div>
+                <ul id = 'show_content'>
+                    {% if NO %}
+                    暂无此分类,请返回吧
+                    {% endif %}
+                    {% for item in content %}
+                    <li>
+                        <div class="book-intro">
+                            <div class="cover"><a href="/fiction/{{item.fiction_nid}}/"><img src="{{item.fiction_avatar_url}}" alt=""></a></div>
+                            <div class="book-meta cate">
+                                <div class="book-title"><a href="/fiction/{{item.fiction_nid}}/">{{item.fiction_title}}</a></div>
+                                <p ><span class="label">作者：</span><span class="lable-text">{{item.author}}</span>
+                                <span class="label">分类：</span><span class="lable-text"><a href='/category?category={{item.fiction_style}}'>{{item.style}}</a></span>
+                                <span class="label">评分：</span><span class="lable-text">{{item.score}}</span></p>
+                                <div class="info">
+                                    <p>
+                                    {{item.fiction_intro|slice:"60"}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="list-more">
+                    {% if not NO %}
+                        <a href='javascript:void(0);' id = 'previous_page'>前一页</a> 当前第<span id ='cur_page'> {{current}} </span> 页 <a href = 'javascript:void(0);' id = 'next_page'>后一页</a> 共{{total}}页
+                    {% endif %}
+                </div>
+
+            </div>
+            <div class="span4">
+                <h2><div style = 'border-bottom:2px solid #b17750;'>分类<img id = 'category_tips' style='margin-bottom:3px;display:none;margin-left:6px;' width = 20 height = 20 src = '/site_media/image/loading.gif'></div></h2>
+                <ul class="book-items mb20">
+                    <li id='li-21'>
+                        <a href="javascript:void(0);" id = 'cate-21'>玄幻(0)</a>
+                    </li>
+                    <li id='li-1'>
+                        <a href="javascript:void(0);" id = 'cate-1'>奇幻(0)</a>
+                    </li>
+                    <li id='li-2'>
+                        <a href="javascript:void(0);" id = 'cate-2'>武侠(0)</a>
+                    </li>
+                    <li id = 'li-22'>
+                        <a href="javascript:void(0);" id = 'cate-22'>仙侠(0)</a>
+                    </li>
+                    <li id = 'li-4'>
+                        <a href="javascript:void(0);" id = 'cate-4'>都市(0)</a>
+                    </li>
+                    <li id = 'li-5'>
+                        <a href="javascript:void(0);" id = 'cate-5' >历史(0)</a>
+                    </li>
+                    <li id = 'li-6'>
+                        <a href="javascript:void(0);" id ='cate-6'>军事(0)</a>
+                    </li>
+                    <li id = 'li-7'>
+                        <a href="javascript:void(0);" id = 'cate-7'>游戏(0)</a>
+                    </li>
+                    <li id = 'li-8'>
+                        <a href="javascript:void(0);" id = 'cate-8'>竞技(0)</a>
+                    </li>
+                    <li id = 'li-9'>
+                        <a href="javascript:void(0);" id = 'cate-9'>科幻(0)</a>
+                    </li>
+                    <li id = 'li-10'>
+                        <a href="javascript:void(0);" id = 'cate-10'>灵异(0)</a>
+                    </li>
+                    <li id = 'li-15'>
+                        <a href="javascript:void(0);" id = 'cate-15'>青春(0)</a>
+                    </li>
+                    <li id = 'li-12'>
+                        <a href="javascript:void(0);" id = 'cate-12'>同人(0)</a>
+                    </li>
+                    <li id = 'li-14'>
+                        <a href="javascript:void(0);" id = 'cate-14'>图文(0)</a>
+                    </li>
+                    <li id = 'li-31'>
+                        <a href="javascript:void(0);" id = 'cate-31'>文学(0)</a>
+                    </li>
+                    <li id = 'li-41'>
+                        <a href="javascript:void(0);" id = 'cate-41'>女生(0)</a>
+                    </li>
+                </ul>
+                <h2>排行榜</h2>
+                <ul class="top">
+                    <li>
+                        <div class="cover"><a href=""><img src="" alt=""></a></div>
+                        <div class="top-list">
+                            <h2><span class="nub">1. </span><a href="">将夜</a></h2>
+                            <p>猫腻</p>
+                            <p class="top-text"> 宁可永劫受沉沦，不从诸圣解脱。 与天斗，其乐无穷。（这是一个“别人家孩子”撕掉臂上杠章穿越前尘的故事）</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cover"><a href=""><img src="" alt=""></a></div>
+                        <div class="top-list">
+                            <h2><span class="nub">2. </span><a href="">百炼成仙</a></h2>
+                            <p>幻雨</p>
+                            <p class="top-text">仙路崎岖，百般磨练终成正果 一个没有灵根的少年，一个被认为是废物的家伙，在修真界不断地收购着各种废品</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cover"><a href=""><img src="" alt=""></a></div>
+                        <div class="top-list">
+                            <h2><span class="nub">3. </span><a href="">杀神</a></h2>
+                            <p>逆苍天</p>
+                            <p class="top-text">在这个人吃人的疯狂世界，神已无力回天，就让我踏着漫天诸神的累累尸骨来普渡这芸芸众生……</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cover"><a href=""><img src="" alt=""></a></div>
+                        <div class="top-list">
+                            <h2><span class="nub">4. </span><a href="">武动乾坤</a></h2>
+                            <p>天蚕土豆</p>
+                            <p class="top-text">修炼一途，乃窃阴阳，夺造化，转涅盘，握生死，掌轮回。 武之极，破苍穹，动乾坤！</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cover"><a href=""><img src="" alt=""></a></div>
+                        <div class="top-list">
+                            <h2><span class="nub">5. </span><a href="">遮天</a></h2>
+                            <p>辰东</p>
+                            <p class="top-text">冰冷与黑暗并存的宇宙深处，九具庞大的龙尸拉着一口青铜古棺，亘古长存。 这是太空探测器在枯寂的宇宙中捕捉到的一幅极其震撼的画面。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+   <div class="modal hide" id="myModal" style='background:'>
+        </div>
+
+<div data-toggle='modal' data-target='#myModal' id = 'star'>sdsdfsdff</div>
+{% endblock %}
+
+{% block js %}
+<script>
+var cur_page = 1;
+var cur_sort ='0';//popular
+var style = '0';//all
+
+
+$(document).ready(
+    function()
+    {
+    var datas = ['1', '2', '22', '4', '5', '6', '7', '8', '9', '10', '12',
+        '14', '31', '41', '21', '15'];
+    for(var i = 0;i < 16;i ++)
+    {
+        category_add_click_evt(datas[i]);
+    }
+    
+    get_all_category();
+    $('#by_popular').css('color', 'gray');
+    $('#by_popular').css('font-weight', 'bold');
+    $('#by_popular').click(
+        function()
+        {
+            if(cur_sort == '1')
+            {
+    
+                $('#by_time').css('color', '#b17750');
+                $('#by_time').css('font-weight', '');
+                $('#by_popular').css('color', 'gray');
+                $('#by_popular').css('font-weight', 'bold');
+                $('#loading_gif').css('display', ''); 
+                cur_page = 1;
+                cur_sort = '0';
+                set_content(cur_page, cur_sort, style);
+                $('#cur_page').html(cur_page);
+                $('#loading_gif').css('display', 'none');
+            }
+        }
+    );
+    $('#by_time').click(
+        function()
+        {
+            if(cur_sort == '0')
+            {
+                $('#by_popular').css('color', '#b17750');
+                $('#by_popular').css('font-weight', '');
+                $('#by_time').css('color', 'gray');
+                $('#by_time').css('font-weight', 'bold');
+                $('#loading_gif').css('display', ''); 
+                cur_page = 1;
+                cur_sort = '1';
+                set_content(cur_page, cur_sort, style);
+                $('#cur_page').html(cur_page);
+                $('#loading_gif').css('display', 'none');
+            }
+
+        }
+    );
+$('#previous_page').click(
+    function()
+    {
+        if(cur_page != 1)
+        {
+            set_content(cur_page - 1, cur_sort, style);        
+            cur_page -= 1;
+            $('#cur_page').html(cur_page);
+        }
+    }
+);
+
+$('#next_page').click(
+    function()
+    {
+        if(cur_page != {{total}})
+        {
+            set_content(cur_page + 1, cur_sort, style);        
+            cur_page += 1;
+            $('#cur_page').html(cur_page);
+        }
+
+    }
+);
+}
+);
+function category_add_click_evt(id)
+{
+    $('#cate-'+ id).click(
+        function()
+        {
+            if(style != id)
+            {
+                $('#li-' + style).css('background', '');
+                $('#li-' + id).css('background', '#efefef');
+                style = '' + id;
+                cur_sort = '0';
+                cur_page = 1;
+                set_content(cur_page, cur_sort, style);
+            }
+        }
+    );
+}
+function get_all_category()
+{
+    $('#category_tips').css('display','');
+    $('<div>').load(
+    '/get_category_number/',
+    {'csrfmiddlewaretoken' : '{{csrf_token}}'},
+    function()
+    {
+    
+    var datas = ['1', '2', '22', '4', '5', '6', '7', '8', '9', '10', '12',
+        '14', '31', '41', '21', '15'];
+    var style = {'1' : '奇幻', '2' : '武侠', '22' : '仙侠', '4' : '都市', '5' : '历史', '6' : '军事', '7' : '游戏', '8' : '竞技',
+            '9' : '科幻', '10' : '灵异', '12' : '同人', '14' : '图文', '31' : '文学', '41' : '女生', '21' : '玄幻', '15' :  '青春'}; 
+    
+    var data = $(this).html();
+    var data = eval(data);
+    var data = data[0];
+    for(var i = 0;i < 16; i ++)
+    {
+        $('#cate-' + datas[i]).html(style[datas[i]] + "(" + data[datas[i]] + ")");
+    }
+    $('#category_tips').css('display','none');
+    });
+}
+function set_content(page_index, sort_by, category)
+{
+     $('<div>').load(
+            '/category/',
+            {'page_index': String(page_index),
+            'sort_by':sort_by,
+            'category' : category,
+            'from' : 'ajax',
+            'csrfmiddlewaretoken' : '{{csrf_token}}'},
+            function()
+            {
+                var data = eval($(this).html());
+                var content = "";
+                for(var i = 0;data[i] != null; i ++)
+                {
+                    content += "<li>" + 
+                       " <div class=\"book-intro\">" + 
+                         "   <div class=\"cover\"><a href=\"" + "/fiction/" + data[i].nid + "/" + "\"><img src=\"" + 
+                         data[i].avatar_url + "\" alt=\"\"></a></div><div class=\"book-meta cate\">" + 
+                         "<div class=\"book-title\"><a href=\" " + "/fiction/" + data[i].nid + "/" + "\"> " +
+                         data[i].title + "</a></div><p ><span class=\"label\">作者：</span><span class=\"lable-text\"> " +
+                         data[i].author + "</span><span class=\"label\">分类：</span><span class=\"lable-text\">" + 
+                         "<a href='/category?category=" + data[i].style_id+ "'>" + data[i].style + "</a></span><span class=\"label\">" +
+                         "评分：</span><span class=\"lable-text\">" + data[i].score + "</span></p><div class=\"info\">" + 
+                         "<p>" + data[i].intros + "</p></div></div></div></li>";
+                }
+                $('#show_content').html(content);
+            });
+
+}
+</script>
+{% endblock %}

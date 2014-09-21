@@ -1,0 +1,196 @@
+var cur_id = '0';
+var rec_content = "";
+var click_content = "";
+
+function clean_log()
+{
+    //delete cookie
+    $.cookie('read_log', null);
+    //clean are
+    $('#show_history').html('');
+}
+
+function show_history(token)
+{
+    $('#loading_gif').fadeOut(200);
+   var content = "";
+   var cookies = $.cookie('read_log');
+        var fiction_name = "";
+        $('<div>').load(
+            '/get_fiction_and_newest_chapter/',
+            {'csrfmiddlewaretoken' : token,
+		'data' : cookies},
+            function()
+            {
+
+                var datas = $(this).html();
+                datas = eval('[' + datas + ']');
+   		        for(var j = 0;datas[j] != null; j ++)
+    		    { 
+                               
+            	    var content = "";
+                    if(datas[j].chapter_title == '')
+                    {
+                        content += '<li>' + datas[j].time + ': <a href = "/fiction/' + 
+                        datas[j].fiction_nid + '">' + datas[j].fiction_title + '</a> 最新章节: ' + datas[j].fiction_chapter;
+                    }
+                    else
+                    {
+                        content += '<li>' + datas[j].time + ': <a href = "/fiction/' + 
+                        datas[j].fiction_nid + '">' + datas[j].fiction_title + '</a> 阅读到 <a href = "' + datas[j].url + '">' + datas[j].chapter_title + '</a>';
+                    }
+                    content += '</li>';
+                    $('#loading_gif').css('display', 'none');
+                    $('#show_history').append(content);
+                }
+
+         });
+        }
+
+    function chapter_character(url,_nid, nid, token)
+    {
+        //save cookie
+        save_read_log(url, _nid, nid);
+        $('<div>').load(
+        '/add_click_time_chapter/',
+        {'nid' : _nid,
+        'csrfmiddlewaretoken' :token},
+        function()
+        {
+        }
+        );
+        location.href = url;
+    }
+
+
+    Date.prototype.format = function(format) {  
+        /* 
+         * eg:format="yyyy-MM-dd hh:mm:ss"; 
+         */  
+        var o = {  
+            "M+" : this.getMonth() + 1, // month  
+            "d+" : this.getDate(), // day  
+            "h+" : this.getHours(), // hour  
+            "m+" : this.getMinutes(), // minute  
+            "s+" : this.getSeconds(), // second  
+            "q+" : Math.floor((this.getMonth() + 3) / 3), // quarter  
+            "S" : this.getMilliseconds()  
+            // millisecond  
+        }  
+      
+        if (/(y+)/.test(format)) {  
+            format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4  
+                            - RegExp.$1.length));  
+        }  
+      
+        for (var k in o) {  
+            if (new RegExp("(" + k + ")").test(format)) {  
+                format = format.replace(RegExp.$1, RegExp.$1.length == 1  
+                                ? o[k]  
+                                : ("00" + o[k]).substr(("" + o[k]).length));  
+            }  
+        }  
+        return format;  
+    }  
+
+    function character(url, nid, _nid, token)
+    {
+        save_read_log(url, nid, _nid);
+        $('<div>').load(
+        '/add_click_time_fiction/',
+        {'nid' : _nid,
+        'csrfmiddlewaretoken' :token},
+        function()
+        {
+            
+        }
+        );
+        location.href = url;
+    }
+
+    function save_read_log(url, chapter_id, fiction_nid)
+    {
+        read_log = $.cookie('read_log');
+        var time = new Date().format("yyyy-MM-dd hh:mm:ss");
+        if(read_log == null)
+        {
+            new_read_log = '{"tag":"1","chapter_id":"' + chapter_id + 	'","fiction_nid":"' + fiction_nid + '","url":"' + url +'","time":"' + time + '"}';
+            $.cookie('read_log', new_read_log, {'expires' : 7, 'path' : '/'});
+        }
+        else
+        {
+            var is_change = false;
+            var logs = eval('[' + $.cookie('read_log') + ']');
+            var new_log = "";
+            for(var j = 0; logs[j] != null; j ++)
+            {
+                if(fiction_nid == logs[j].fiction_nid)
+                {
+                    new_log += '{"tag":"1","chapter_id":"' + chapter_id + '","fiction_nid":"' + fiction_nid + '","url":"' + url + '","time":"' + time + '"}';
+                    is_change = true;
+                }
+                else
+                {
+                    new_log += '{"tag":"1","chapter_id":"' + logs[j].chapter_id + '","fiction_nid":"' + logs[j].fiction_nid + '","url":"' + logs[j].url + '","time":"' + logs[j].time + '"}';
+                }
+                if(logs[j + 1] != null)
+                    new_log += ',';
+            }
+            if(! is_change)
+            {
+                new_log += ',';
+                new_log += '{"tag":"1","chapter_id":"' + chapter_id + '","fiction_nid":"' + fiction_nid + '","url":"'+ url +'","time":"' + time + '"}';
+            }
+            $.cookie('read_log', new_log, {'expires' : 7, 'path' : '/'});
+        }
+    }
+
+    function load_list(csrf_token, url, div_id)
+    {
+            $('<div>').load(
+                url,
+                {'csrfmiddlewaretoken' : csrf_token},
+                function()
+                {
+                    var content = "";
+                    var data = eval($(this).html());
+                    content += "<li><div class='cover' style='width:70px;'><a onclick=\"character('/fiction/"+ data[0]['nid'] +"/','', '"+ data[0]['nid'] +"', '"+ csrf_token + "');\" href='javascript:void(0);'><img style='width:60px;height:80px;' src='" + data[0]['avatar'] + 
+                        "' alt=''></a></div><div class='top-list'style='width:180px;height:auto;'><h2 style='font-size:13px;line-height:10px;'><span class='nub'>" + 
+                        (1) + ". </span><a onclick=\"character('/fiction/"+ data[0]['nid'] +"/','', '"+ data[0]['nid'] +"', '"+ csrf_token + "');\" href='javascript:void(0);'>"+ data[0]['title'] +
+                        "</a></h2><p class='top-text'>"+ 
+                        data[0]['intro'] +"<a onclick=\"character('/fiction/"+ data[0]['nid'] +"/','', '"+ data[0]['nid'] +"', '"+ csrf_token + "');\" href='javascript:void(0);' >......</a></p>" +
+                          
+                        "<span style='float:right;font-size:12px;font-weight:bold;color:#555;'>" + data[0]['author'] + "著</span>" + 
+                        "<span style = 'float:right;margin-right:5px;font-size:12px;color:#555;'>收录于" + data[0]['source'] + "</div></li>"
+                  
+                    for(var i = 1; data[i] != null; i ++)
+                    {
+                        content += "<li style='height:auto;'><div class='top-list' style='height:auto;width:260px'><font style='font-size:13px;line-height:10px;'><span class='nub'>" + 
+                    (i + 1) + ". </span><a onclick=\"character('/fiction/"+ data[i]['nid'] +"/', '','"+ data[i]['nid'] +"', '"+ csrf_token + "');\" href='javascript:void(0);' >"+ data[i]['title'] +
+                    "</a></font><font style='margin:0px 0px 0px 0px;margin-left:4px;'class='top-text'>"+ 
+                    data[i]['intro'] +"<a onclick=\"character('/fiction/"+ data[i]['nid'] +"/', '','"+ data[i]['nid'] +"', '"+ csrf_token + "');\" href='javascript:void(0);' >.......</a></font><br/>" + 
+                    
+                    "<span style='float:right;font-weight:bold;font-size:12px;color:#555;'>" + data[i]['author'] + "著</span>" + 
+                    "<span style = 'float:right;margin-right:5px;font-size:12px;color:#555;'>收录于"+ data[i]['source'] +"</div></li>";
+                }
+                $('#show_rec_ranking').html(content);
+                if(div_id == "#show_rec_ranking")
+                    rec_content = content;
+                else
+                    click_content = content;
+            }
+        );
+}
+function change_content_show(id)
+{
+   if(id != cur_id)
+   {
+        $('#menu_' + cur_id).css('border-bottom', '0px');
+        $('#menu_' + id).css('border-bottom', '2px solid #b17750');
+        cur_id = id;
+        if(id == '0')
+            $('#show_rec_ranking').html(rec_content);
+        else
+            $('#show_rec_ranking').html(click_content);
+   }
+}

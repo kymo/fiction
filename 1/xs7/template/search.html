@@ -1,0 +1,147 @@
+ {% extends "base.html" %}
+
+ {% block title %}
+  搜索关键字 {{key_word}} 的结果 --启书小说搜索
+ {% endblock %}
+
+ {% block css %}
+ {% endblock %}
+ {% block main %}
+ <div class="row">
+            <div class="span8">
+                <div class="cate-nav">
+                    <h3>搜索 "{{key_word}}" 结果如下：共{{total}}个 </h3>
+                </div>
+                <ul>
+                {% for item in outcome %}
+                    <li>
+                        <div class="book-intro">
+                            <div class="cover"><a href=""><img src="{{item.fiction_url}}" alt=""></a></div>
+                            <div class="book-meta cate">sdf
+                                <div class="book-title"><a href="/fiction/{{item.fiction_nid}}">{{item.fiction_title}}</a></div>
+                                <p ><span class="label">作者：</span><span class="lable-text">{{item.fiction_author}}</span></p>
+                                <p ><span class="label">分类：</span><span class="lable-text">{{item.fiction_style}}</span></p>
+                                <p ><span class="label">评分：</span><span class="lable-text">4.8</span></p>
+                                <div class="info">
+                                    <p>
+                                    {{item.fiction_intro}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+                <div class="list-more">
+                    <a href="">查看更多 »</a>
+                </div>
+
+            </div>
+            <div class="span4">
+                <h2><div style='border-bottom:2px solid #b17750;'>分类</div></h2>
+                <ul class="book-items mb20">
+                    <li>
+                        <a href="">玄幻</a>
+                    </li>
+                    <li>
+                        <a href="">奇幻</a>
+                    </li>
+                    <li>
+                        <a href="">武侠</a>
+                    </li>
+                    <li>
+                        <a href="">仙侠</a>
+                    </li>
+                    <li>
+                        <a href="">都市</a>
+                    </li>
+                    <li>
+                        <a href="">青春</a>
+                    </li>
+                    <li>
+                        <a href="">玄幻</a>
+                    </li>
+                    <li>
+                        <a href="">奇幻</a>
+                    </li>
+                    <li>
+                        <a href="">武侠</a>
+                    </li>
+                    <li>
+                        <a href="">仙侠</a>
+                    </li>
+                    <li>
+                        <a href="">都市</a>
+                    </li>
+                    <li>
+                        <a href="">青春</a>
+                    </li>
+                    <li>
+                        <a href="">玄幻</a>
+                    </li>
+                    <li>
+                        <a href="">奇幻</a>
+                    </li>
+                    <li>
+                        <a href="">武侠</a>
+                    </li>
+                    <li>
+                        <a href="">仙侠</a>
+                    </li>
+                    <li>
+                        <a href="">都市</a>
+                    </li>
+                    <li>
+                        <a href="">青春</a>
+                    </li>
+                </ul>
+                <h2>排行榜</h2>
+                <ul class="top">
+                    <li>
+                        <div class="cover"><a href=""><img src="img/book01.gif" alt=""></a></div>
+                        <div class="top-list">
+                            <h2><span class="nub">1. </span><a href="">将夜</a></h2>
+                            <p>猫腻</p>
+                            <p class="top-text"> 宁可永劫受沉沦，不从诸圣解脱。 与天斗，其乐无穷。（这是一个“别人家孩子”撕掉臂上杠章穿越前尘的故事）</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cover"><a href=""><img src="img/book02.gif" alt=""></a></div>
+                        <div class="top-list">
+                            <h2><span class="nub">2. </span><a href="">百炼成仙</a></h2>
+                            <p>幻雨</p>
+                            <p class="top-text">仙路崎岖，百般磨练终成正果 一个没有灵根的少年，一个被认为是废物的家伙，在修真界不断地收购着各种废品</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cover"><a href=""><img src="img/book03.gif" alt=""></a></div>
+                        <div class="top-list">
+                            <h2><span class="nub">3. </span><a href="">杀神</a></h2>
+                            <p>逆苍天</p>
+                            <p class="top-text">在这个人吃人的疯狂世界，神已无力回天，就让我踏着漫天诸神的累累尸骨来普渡这芸芸众生……</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cover"><a href=""><img src="img/book04.gif" alt=""></a></div>
+                        <div class="top-list">
+                            <h2><span class="nub">4. </span><a href="">武动乾坤</a></h2>
+                            <p>天蚕土豆</p>
+                            <p class="top-text">修炼一途，乃窃阴阳，夺造化，转涅盘，握生死，掌轮回。 武之极，破苍穹，动乾坤！</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cover"><a href=""><img src="img/book05.gif" alt=""></a></div>
+                        <div class="top-list">
+                            <h2><span class="nub">5. </span><a href="">遮天</a></h2>
+                            <p>辰东</p>
+                            <p class="top-text">冰冷与黑暗并存的宇宙深处，九具庞大的龙尸拉着一口青铜古棺，亘古长存。 这是太空探测器在枯寂的宇宙中捕捉到的一幅极其震撼的画面。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+{% endblock %}
+{% block js %}
+
+{% endblock %}

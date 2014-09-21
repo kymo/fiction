@@ -1,0 +1,65 @@
+.cover
+{
+padding-top:10px;
+margin-right:8px;
+width:90px;
+}
+.top li
+{
+padding-bottom: 3px;
+margin-bottom:3px;
+}
+.top-list
+{
+width:195px;
+}
+.cover img
+{
+width: 100px;
+height:120px;
+}
+.book-img img
+{
+    width: 70px;
+    height: 80px;
+    border-radius:3px;
+}
+.book-list li
+{
+    margin: 5px 5px;
+    background:#f7f7f7;
+    padding: 10px 10px 0px 10px;
+}
+.book-title
+{
+    margin-bottom:0px;
+}
+.book-list a 
+{
+font-size:12px;
+}
+.line-show
+{
+    border-right:1px solid #84c2b7;
+}
+#menu ul li
+{
+list-style-type:none;
+display:inline;
+padding:5px 10px;
+font-size:15px;
+}
+#menu span
+{
+margin-right:10px;
+padding: 4px 0px 0px 0px;
+}
+#menu
+{
+    margin-top:10px;
+    padding:10px 10px 10px 0px;
+}
+.span8
+{
+    width:900px;
+}

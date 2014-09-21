@@ -1,0 +1,465 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+小说: {{fiction.fiction_title}}
+{% endblock %}
+
+{% block css %}
+
+<style> 
+#newest_list
+{
+    cursor: hand;
+}
+#all_list
+{
+    cursor: hand;
+}
+.table td
+{
+    line-height: 15px;
+    border:0px;
+}
+.book-meta
+{
+    *float:left;
+    width:75%;
+}
+.cover
+{
+    *float:left;
+}
+table td
+{
+    font-size:13px;
+    width:200px;
+}
+#newest_list
+{
+    font-family:宋体,新宋体;font-weight:bold;font-size:16px;margin-left:10px;margin-right:10px;cursor:hand;
+    color:#831b1b;
+}
+#all_lists
+{
+    color : #776157;
+    font-family:宋体,新宋体;font-weight:bold;font-size:16px;margin-left:10px;margin-right:10px;cursor:hand;
+}
+.cover
+{
+    padding:5px;
+    border:1px solid #edd;
+}
+#all_lists:hover
+{
+    text-decoration:underline;
+
+}
+.top_list a
+{
+    color:#555;
+}
+.tips a
+{
+color:#555;
+}
+#show_chapter_urls
+{
+padding:10px;
+}
+#show_chapter_urls table
+{
+    width:960px;
+}
+#show_chapter_urls table a:hover
+{
+    text-decoration:underline;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+<div style='width:100%;margin-top:-10px;'>
+      <span style='font-size:12px;color:#555;'>
+        当前位置
+        </span>
+        <span class='tips' style = 'margin-left:20px;color:#222;font-size:12px;'>
+        <a href='/'>首页 </a>
+        >
+        <a href = '/fiction/{{fiction.fiction_nid}}/'>{{fiction.fiction_title}}
+        </a>
+        ><a href = '/fiction/{{fiction.fiction_nid}}/{{index}}/'>{{chapter.chapter_title}}</a>
+        </span>
+    </span>
+</div>
+<div class="row">
+            <div class="span12" style="height:330px;margin-top:6px;border:1px solid #ddd;background:#fcfcfc;padding:15px;">
+                <div class="book-intro">
+                    <div class="cover">
+                        <a href="">
+                            <img src="{{fiction.fiction_avatar_url}}" alt=""></a>
+                    </div>
+                    <div class="book-meta">
+                        <h1>{{fiction.fiction_title}}
+                       <span id = 'tips'>
+                       {% if not owned %} 
+<span id = 'add_shelf' style = 'font-size:13px;margin-left:20px;padding:3px;background:#b9735d;color:#eee'>加入书架</span>
+                        
+                        {% else %}
+                           <span style='font-size:13px;' id = 'remove_tip'> 书架中已存在,<a href = '#'  id='remove_button' >移除</a></span>
+                        {% endif %}
+                        </span>
+                        </h1>
+                        <table>
+                        <tr>
+                        <td >
+                            <span class="label">大类：</span>
+                            <span class="label-text">{{fiction.style}}</span>
+                        </td>
+                        <td >
+                            <span class="label">完成字数：</span>
+                            <span class="label-text">{{fiction.total_word}}</span>
+                        </td>
+                        <td >
+                            <span class="label">写作进程：</span>
+                            <span class="label-text">连载中</span>
+                        </td>
+                        <td>
+                            <span class="label">首次收录于: </span>
+                            <span class="label-text">{{fiction_site}}</span>
+                        </td>
+                        <tr>
+                        <td>
+                            <span class="label">作者：<span>
+                            <span class="label-text">{{fiction.author}}</span>
+                        </td>
+                        <td>
+                            <span class="label">本书总收藏：</span>
+                            <span class="label-text">{{fiction.stock_time}}</span>
+                        </td>
+                        <td><span class="label">本书总点击：</span>
+                            <span class="label-text">{{fiction.click_time}}</span>
+                        </td>
+                        <td>
+                            <span class="label">本书总推荐：</span>
+                            <span class="label-text">{{fiction.rec_time}}</span>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td>
+                            <span class="label">评分</span>
+                            <span class="label-text">{{fiction.score}}</span>
+                        </td>
+                        </tr>
+                        </table>
+                    <div>
+                        <div style="float:left;padding:5px;" class='label'>我来打个分</div>
+                        <div style='float:left;margin-left:10px;' data-toggle='modal' data-target='#myModal' id = 'star'></div>
+                    </div>
+                    </div>
+                </div>
+                <div class="book-abstract" style='word-wrap:break-word;width:100%;*line-height:10px;border-bottom:0px;'>
+                    <h2 style='color:#5f1e1e;'>小说简介</h2>
+                    <div class="info">
+                        <p style='font-size:12px;font-family:宋体,新宋体;*line-height:20px;'>
+                        {{fiction.fiction_intro|slice:"400"}}....
+                        </p>
+                    </div>
+                </div>
+           </div>
+           <div class = 'span12' style='background:#fcfcfc;border:1px solid #ddd;border-top:3px solid #b15540;
+            margin-top:10px;padding:15px;padding-top:0px;'>
+                <div style = 'padding:10px;padding-bottom:5px;border-bottom:1px solid #ddd;border-radius:4px;'>
+                    <span style='font-size:15px;font-weight:bold;color:#000;'>
+                        《{{fiction.fiction_title}}》&nbsp;({{chapter.chapter_title}})
+                    </span>
+                    <span style='margin-left:20px;float:right;font-size:15px;font-weight:bold;color:#666;'>
+                        <a href='/fiction/{{fiction.fiction_nid}}/{{next_chapter_index}}/'> 下一章</a>
+                    </span>
+                    <span style='float:right;font-size:15px;font-weight:bold;color:green;color:#666;'>
+                        <a href = '/fiction/{{fiction.fiction_nid}}/{{bef_chapter_index}}/'>
+                        上一章
+                        </a>
+                    </span>
+                </div>
+                <div id = 'show_chapter_urls'>
+                <table>
+
+                {% for item in chapter_urls %}
+                    <tr>
+                    <td>
+                    {{item.idx}}
+                    &nbsp;&nbsp;
+                    &nbsp;&nbsp;
+                    <a href = '{{item.url}}'>
+                    {{item.title}}
+                    </a>
+                    </td>
+                    <td>{{item.name}}
+                    </td>
+                    <td>
+                    {{item.record_time}}
+                    </td>
+                    </tr>
+                {% endfor %}
+                </table>
+                </div>
+               <div class="list-more">
+                </div>
+            </div>
+           <!--
+            <div class = 'span12' style='width:950px;margin-top:10px;border:1px solid #ddd;border-top:2px solid green;background:#fcfcfc;'>
+               <div style = 'padding:10px;padding-bottom:5px;border-bottom:1px solid #ddd;border-radius:4px;'>
+                    <span style='font-size:15px;font-weight:bold;color:#000;'>
+                        猜你喜欢
+                    </span>
+                </div>
+              
+            
+            </div>
+            -->
+        </div>
+        {% if not is_auth %}
+        <div class="modal hide" id="myModal">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"  >&times;</button>
+        </div>
+        <div class="modal-body">
+        <p>登录用户才能评分哟</p>
+        <a href = '/login/'>我有帐号</a> <a href = '/register/'>注册</a>
+        </div>
+        <div class="modal-footer">
+        <a href="#"  data-dismiss="modal" class="btn">关闭</a>
+        </div>
+        </div>
+        {% endif %}
+<div id = 'float_menu' style = 'display:none;z-index;444;position:absolute;
+top:100px;left:100px;width:160px;height:30px;color:#eee;background:rgba(10,10,10,0.9);border-radius:3px;padding-top:10px;padding-left:60px;'>
+    <img src = '/site_media/image/load.gif'>
+</div>
+
+{% endblock %}
+{% block js %}
+<script src = '/site_media/js/jquery.raty.js'></script>
+<script src = '/site_media/js/json2.js'></script>
+<script src = '/site_media/js/index.js'></script>
+<script>
+var cur_page = "asc";
+var newest_page = $('#show_list').html();
+var all_page = "";
+$(document).ready(
+    function(){
+
+
+    //save cookie
+    character('/fiction/{{fiction.fiction_nid}}/', '', '{{fiction.fiction_nid}}', '{{csrf_token}}'); 
+    $('#star').raty(
+    {
+        click:function(score, evt)
+        {
+            {% if is_auth %}
+            //get cookie
+               $('<div>').load(
+                    '/grading/',
+                    {'score' : String(score),
+                        'fiction_nid' : '{{fiction.fiction_nid}}',
+                        'csrfmiddlewaretoken' : '{{csrf_token}}',
+                        'user_nid' : '{{user.nid}}'
+                    },
+                    function()
+                    {   
+                        var data = $(this).html();
+                        if(data == 'ok')
+                        {
+                            alert('评分成功');
+                        }
+                        else if(data == 'again')
+                        {
+                            alert('已经评过一次.');
+                        }
+                    }
+                );
+            {% endif %}
+        }
+    }
+    );
+    $('#descending').click(
+        function()
+        {
+            if(cur_page != 'des')
+            {
+                var content_2 = $('#show_list_des').html();
+                var content_1 = $('#show_list_asc').html();
+                $('#show_list_des').html(content_1);
+                $('#show_list_asc').html(content_2);
+                $('#descending').css('color', '#b04354');
+                $('#descending').css('font-weight', 'bold');
+                $('#ascending').css('color', '#b17750');
+                $('#ascending').css('font-weight', '');
+                cur_page = 'des';
+            }
+        }
+    );
+
+    $('#ascending').click(
+        function()
+        {
+            if(cur_page != 'asc')
+            {
+                var content_2 = $('#show_list_des').html();
+                var content_1 = $('#show_list_asc').html();
+                $('#show_list_des').html(content_1);
+                $('#show_list_asc').html(content_2);
+                $('#descending').css('color', '#b17750');
+                $('#descending').css('font-weight', '');
+                $('#ascending').css('color', '#b04354');
+                $('#ascending').css('font-weight', 'bold');
+                cur_page = 'asc';
+            }
+        }
+    );
+    $('#all_list').click(
+        function()
+        {
+        if(cur_page != 'all')
+                {
+                    cur_page = "all";
+                    $('#all_list').css('color', '#831b1b');
+                    $('#newest_list').css('color', '#776157');
+                    newest_page = $('#show_list').html();
+                    if(all_page)
+                    {
+                        $('#show_list').html(all_page);
+                    }
+                    else
+                    {
+                        $('#show_list').html('加载中.');
+                        //get the all chapters
+                        $('<div>').load(
+                            '/get_all_chapters/',
+                            {'csrfmiddlewaretoken' : '{{ csrf_token }}',
+                            'fiction_nid' : '{{fiction.fiction_nid}}'},
+                            function()
+                            
+                            {
+                                var content = "<thead><tr> <th colpadding=20>所有章节(单击标题查看所在网站信息)</th></thead><tbody>"
+                                var data =$(this).html();
+                                data = eval(data);
+                                for(var t = 0; data[t] != null; t += 3)
+                                {
+                                    content += "<tr><td><a href='javascript:void(0);' onclick=\"show_menu('" + data[t]['chapter_id'] + "');\" id = 'fiction_" + data[t]['chapter_id'] + "'>" + data[t]['title'] + "</a></td>";
+                                    if(data[t + 1] != null)
+                                        content += "<td><a href='javascript:void(0);'  onclick=\"show_menu('" + data[t + 1]['chapter_id'] + "');\" id = 'fiction_" + data[t + 1]['chapter_id'] + "'>" + data[t + 1]['title'] + "</a></td>"
+                                    if(data[t + 2] != null)
+                                        content += "<td><a href='javascript:void(0);' onclick=\"show_menu('" + data[t + 2]['chapter_id'] + "');\"  id = 'fiction_" + data[t + 2]['chapter_id'] + "'>" + data[t + 2]['title'] + "</a></td></tr>"
+                                }
+                                $('#show_list').html(content);
+                            }
+                        );
+                    }
+                }
+            }
+         );
+         $('#newest_list').click(
+            function()
+            {
+                if(cur_page != 'newest')
+                {
+                    cur_page = "newest";
+                    $('#newest_list').css('color', '#831b1b');
+                    $('#all_list').css('color', '#776157');
+                    //get newest list
+                    //save all content
+                    all_page = $('#show_list').html();
+                    if(newest_page)
+                    {
+                        $('#show_list').html(newest_page);
+                    }
+                }
+            }
+        );
+        $('#newest_list').mouseover(
+            function(){
+            }
+        );
+        $('#add_shelf').mouseover(
+            function()
+            {
+                $('#add_shelf').css('cursor', 'hand');
+                $('#add_shelf').css('background', '#8a3e26');
+            }
+        );
+        $('#add_shelf').mouseout(
+            function()
+            {
+                $('#add_shelf').css('cursor', 'point');
+                $('#add_shelf').css('background', '#b9735d');
+            }
+        );
+        {% if is_auth %}
+        $('#add_shelf').click(
+            function()
+            {
+                //add this book in my shelf
+                $("<div>").load(
+                    '/add_shelf/',
+                    {'user_id' : '{{user.id}}',
+                    'fiction_id' : '{{fiction.id}}',
+                    'csrfmiddlewaretoken' : "{{ csrf_token }}"},
+                    function()
+                    {
+                        $('#add_shelf').css('background', '#ddd');
+                        $('#add_shelf').unbind('mouseover');
+                        $('#add_shelf').unbind('mouseout');
+                        $('#tips').fadeOut(20);
+                        $('#tips').html("<span style='font-size:13px;' id = 'remove_tip'>已加入书架</span>");
+                        $('#tips').fadeIn(20);
+                    }
+                );
+            }
+        );
+        
+        {% endif %}
+        $('#remove_button').click(
+            function()
+            {
+                 $('<div>').load(
+                    '/remove/',
+                    {'csrfmiddlewaretoken' :'{{csrf_token}}',
+                    'fiction_nid' : '{{fiction.fiction_nid}}'
+                    },
+                    function()
+                    {
+                        $('#remove_tip').html('已移除');
+                    }
+                 );
+            }
+        );
+    }
+);
+function show_menu(id)
+{
+    var left_m = $('#fiction_' + id).offset().left;
+    var top_m = $('#fiction_' + id).offset().top;
+    $('#float_menu').css('left', left_m + 30);
+    $('#float_menu').css('top', top_m);
+    $('#float_menu').fadeIn(200);
+    $('<div>').load(
+        '/get_chapter_url/',
+        {'chapter_id': id,
+        'csrfmiddlewaretoken': '{{csrf_token}}'},
+        function()
+        {
+            var data = eval($(this).html());
+            var content  =""
+            for(var i = 0; data[i] != null; i ++)
+            {
+                content += "<span><a target = '_blank' href = '/read_book?frm=" + data[i].frm + "&id=" + id + "&book_url=" + data[i].url + "'>" + data[i].title + "</a></span>";
+            }
+            $('#float_menu').html(content);
+        }
+    );
+}
+</script>
+
+{% endblock %}

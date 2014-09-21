@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+小说分类浏览-小说分类浏览
+{% endblock %}
+
+{% block css %}
+<style>
+
+#iknow_page
+{
+    border-top:2px solid #8b6f4f;
+}
+#iknow_page a
+{
+    color:#8b6f4f;
+}
+.cover
+{
+    width: 60px;
+}
+
+.cover img
+{
+    width:60px;
+    height:80px;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="row">
+
+<div>
+<p>
+攻城师同学正在全力开发,有什么建议,在下边说出来吧
+</p>
+<textarea id = 'advice' style='width:300px;height:100px;'>
+</textarea></br>
+您的联系方式,以便攻城师能与您进一步交流.<br/>
+<input type = 'text' id = 'frm' style='width:300px;'>
+<br>
+<input type = 'submit' onclick = 'send_back_end();' value='发送'>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+$(document).ready(
+    function()
+    {
+    }
+);
+function send_back_end()
+{
+    $('<div>').load(
+        '/send_advice_iknow/',
+        {'advice' : $('#advice').val(),
+            'frm' : $('#frm').val(),
+            'csrfmiddlewaretoken' : '{{csrf_token}}'},
+        function()
+        {
+            alert('谢谢您的建议，我们一定会给您一个温馨的交流平台.');
+        }
+    );
+}
+</script>
+{% endblock %}

@@ -1,0 +1,15 @@
+<uwsgi>  
+  <socket>127.0.0.1:9000</socket>
+    <listen>20</listen>  
+      <master>true</master>  
+        <pidfile>/var/run/uwsgi.pid</pidfile>  
+          <processes>2</processes>  
+            <module>wsgi</module>  #这个文件下面要建立
+              <pythonpath>/home/kymo/Desktop/xs7/</pythonpath>   #刚才建立项目的路径
+                <profiler>true</profiler>  
+                  <memory-report>true</memory-report>  
+                    <enable-threads>true</enable-threads>  
+                      <logdate>true</logdate>  
+ <daemonize>/home/kymo/logs/django.log</daemonize>  
+<limit-as>6048</limit-as>  
+                        </uwsgi> 

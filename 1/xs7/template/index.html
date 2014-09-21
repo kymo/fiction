@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+
+{% block title %}
+启书小说搜索，实时更新最新小说信息，推荐你喜欢的小说
+{% endblock %}
+
+{% block css %}
+
+<style>
+#index_page
+{
+    border-top:2px solid #8b6f4f;
+}
+#index_page a
+{
+    color:#8b6f4f;
+}
+.cover
+{
+padding-top:10px;
+margin-right:8px;
+width:90px;
+}
+.top li
+{
+padding-bottom: 3px;
+margin-bottom:3px;
+}
+.top-list
+{
+width:195px;
+}
+.cover img
+{
+width: 100px;
+height:120px;
+}
+.book-img img
+{
+    width: 70px;
+    height: 80px;
+    border-radius:3px;
+}
+.book-list li
+{
+    margin: 5px 5px;
+    background:#f7f7f7;
+    padding: 10px 10px 0px 10px;
+}
+.book-title
+{
+    margin-bottom:0px;
+}
+.book-list a 
+{
+font-size:12px;
+}
+.line-show
+{
+    font-weight:bold;
+}
+.table td
+{
+    line-height: 13px;
+    border-top: 1px dashed #bbb;
+}
+.top
+{
+    table-layout:fixed;
+}
+.top td
+{
+    overflow:hidden;
+    text-overflow:clip;
+    white-space:nowrap;
+    word-break:keep-all;
+}
+.inside_table
+{
+    overflow:hidden;
+    text-overflow:clip;
+    white-space:nowrap;
+    word-break:keep-all;
+}
+.nub
+{
+color:#8b4543;
+}
+.well a
+{
+    color:#000;
+}
+.well a:hover
+{
+    color:#b17750;
+}
+.table a
+{
+    text-decoration:underline;
+    color:#000;
+}
+.table a:hover
+{
+    text-decoration:underline;
+    color:#555;
+}
+.category
+{
+    text-decoration:none;
+    color:red;
+}
+.well
+{
+    background:#fafafa;
+}
+#menu a
+{
+    color:#444;
+}
+body
+{
+font-family:微软雅黑,黑体;
+}
+</style>
+{% endblock %}
+{% block main %}
+   <div class="search" style='width:90%;padding:10px;padding-left:20%;'>
+        <div style='font-size:18px;padding:20px;margin-left:160px;font-family:微软雅黑,黑体;'> <img src = '/site_media/image/logo.png' width=120></div>
+        <div style='margin-top:0px;'>
+            <form action='/search/' method = 'POST'>
+                        {% csrf_token %}
+                        <div class="input-append">
+                            <input class="span5" style='height:25px;width:500px;' id="appendedInputButton" type="text" name='q'>                        
+                            <input class="btn btn-gray" type="submit" style='ound:#614925;width:70px;height:35px;'value = '搜索'>
+                        </div>
+            </form>
+            <span style='font-family:微软雅黑;color:red'>热搜小说:
+            <font style = 'color:#b84040;'>
+            {% for item in hot_words %}
+                <a style = 'color:#b84040;' target='_blank' href='/fiction/{{item.fiction_nid}}/'>{{item.fiction_title}}</a>
+            {% endfor %}
+            </font>
+            </span>
+        </div>
+    </div>
+
+    <div class="row" style='background:#ee7e4;'>
+        <div id ='history_div' class = 'span12' style='width:920px;margin-top:10px;margin-bottom:px;padding:10px;'>
+            <div class='wel' style=''>
+                <div id = 'show_history' style='font-weight:normal;text-align:left;width:100%;font-size:12px;color:#888;'>
+                </div>
+            </div>
+        </div>
+        <div class="span12">
+            <div class='wsell' style='border-right:0px solid #eee;padding:2px;'>
+            <h2><div style='border-bottom:2px solid #10;color:#233;font-weight:bold;font-family:微软雅黑;'>最新收录</div></h2>
+            <table class="table table-striped" style='margin-top:-10px;font-size:13px;'>
+              <thead>
+                <tr style='border-top:2px solid #b17750;height:10px;font-weight:bold;'>
+                  <th class = 'line-show' style='font-weight:bold;'>类别</th>
+                  <th class = 'line-show' style='font-weight:bold;'>书名</th>
+                  <th class = 'line-show' style='font-weight:bold;'>作者</th>
+                  <th class = 'line-show' style='font-weight:bold;'>最新章节</th>
+                  <th class = 'line-show' style='font-weight:bold;'>来源网站</th>
+                  <th class = 'line-show' style='font-weight:bold;'>更新时间</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%for item in chapter %}
+                <tr>
+                  <td><a style='text-decoration:none;color:#333'class="category" href="/category/">[{{item.style}}]</a></td>
+                  <td><a href='/fiction/{{item.fiction.fiction_nid}}/'>{{item.fiction.fiction_title}}</a></td>
+                  <td><span>{{item.fiction.author}}</span></td>
+                  <td>
+                  <!--
+                  <a href = '/read_book?id={{item.id}}&frm={{item.frm|urlencode}}&book_url={{item.url}}'>{{item.chapter_title|slice:"20"}}</a>
+                  -->
+                  <a href='/fiction/{{item.fiction.fiction_nid}}/{{item.index}}/'>
+                  {{item.chapter_title|slice:"20"}}</a>
+                  </td>
+                  <td><font style='color:{{item.show_color}}'>{{item.frm}}</font></td>
+                  <td>{{item.time}}</td>
+                </tr>
+                {% endfor %}
+             </tbody>
+            </table>
+            </div>
+            </div>
+           <div class = "span12" style='width:960px;margin-bottom:10px;'>
+                <h2><div style='border-bottom:2px solid #b17750;font-weight:bold;font-family:微软雅黑;'> 新书推荐<span class="link-more"><a href="/category/">更多 »</a></span></div></h2>
+                <ul class="book-list">
+                    {% for item in rec_fiction %}
+                    <li style='*display:inline;'>
+                        <a href='/fiction/{{item.fiction_nid}}/' class="book-img">
+                            <img  src="{{item.fiction_avatar_url}}" alt=""></a>
+                        <div class="book-info">
+                            <h4 class="book-title">
+                                <a href='/fiction/{{item.fiction_nid}}/'>
+                                {{item.fiction_title|slice:"6"}}
+                                </a>
+                            </h4>
+                            <span class="author">{{item.author}}</span>
+                        </div>
+                    </li>
+                   {% endfor %}
+                </ul>
+
+                <div class="list-more">
+                </div>
+            </div>  
+            <div class="span12" style='margin-top:-10px;'>
+               <br/>
+                <div class ='' style='margin-top:-20px;padding-top:10px;'>
+                <h2>
+                <div style = 'border-bottom:2px solid #b17750;'>
+                <div id='menu' style='float:left;font-weight:bold;font-family:微软雅黑;' onclick="change_content_show('0');">
+                    阅读排行榜  
+                </div>
+                <div id='menu_0' style='float:left;margin-left:20px;font-weight:bold;font-family:微软雅黑;' onclick="change_content_show('0', '1', '{{csrf_token}}');">
+                  <a href='javascript:void(0);'style='color:#000;'>奇幻</a>  
+                </div>
+                <div id='menu_1' style = 'float:left;margin-left:10px;font-weight:bold;font-family:微软雅黑;' onclick = "change_content_show('1', '22', '{{csrf_token}}');">
+                  <a href='javascript:void(0);'> 武侠</a>  
+                    
+                </div>
+                 <div id='menu_2' style = 'float:left;margin-left:10px;font-weight:bold;font-family:微软雅黑;' onclick = "change_content_show('2', '9', '{{csrf_token}}');">
+                  <a href='javascript:void(0);'> 科幻</a>   
+                </div>
+                 <div id='menu_3' style = 'float:left;margin-left:10px;font-weight:bold;font-family:微软雅黑;' onclick = "change_content_show('3', '4', '{{csrf_token}}');">
+                    
+                  <a href='javascript:void(0);'> 都市</a>  
+                </div>
+                 <div id='menu_4' style = 'float:left;margin-left:10px;font-weight:bold;font-family:微软雅黑;' onclick = "change_content_show('4', '5', '{{csrf_token}}');">
+                 <a href='javascript:void(0);'> 历史</a>  
+                </div>
+                <div id='menu_add' style = 'float:left;margin-left:10px;font-weight:bold;font-family:微软雅黑;' onclick = "change_content_show('4');">
+                </div> 
+                <div style = 'clear:both;'></div>
+                </div>
+                </h2>
+                <ul class="top" id = 'show_rec_ranking' style='list-style:disc;*word-wrap:break-word;font-family:微软雅黑,黑体;'>
+                   
+                        <div style = 'padding:20px;font-family:微软雅黑,黑体;'>
+                            <img src = '/site_media/image/loading.gif'>
+                        </div> 
+                </ul>
+                </div>
+            </div>
+
+            
+        </div>
+    {% endblock %}
+
+    {% block js %}
+    <!-- Load JS here for greater good =============================-->
+    <script src = '/site_media/js/index.js'></script>
+<script>
+$(document).ready(
+    function()
+    {
+        load_list('{{csrf_token}}', '1', '/type_ranking_list/', '#show_rec_ranking');
+        show_history('{{csrf_token}}', 'index');
+        
+    }
+);
+
+</script>
+
+{% endblock %}

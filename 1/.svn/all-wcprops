@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 22
+/fiction/!svn/ver/58/1
+END
+uwsgi.xml
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/fiction/!svn/ver/1/1/uwsgi.xml
+END
+index.wsgi
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/fiction/!svn/ver/47/1/index.wsgi
+END
+manage.py
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/fiction/!svn/ver/1/1/manage.py
+END
+wsgi.py
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/fiction/!svn/ver/1/1/wsgi.py
+END
+update.log
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/fiction/!svn/ver/1/1/update.log
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/fiction/!svn/ver/31/1/__init__.py
+END
+config.yaml
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/fiction/!svn/ver/1/1/config.yaml
+END
+__init__.pyc
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/fiction/!svn/ver/31/1/__init__.pyc
+END

@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 27
+/fiction/!svn/ver/1/1/utils
+END
+nmlog.py
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/fiction/!svn/ver/1/1/utils/nmlog.py
+END
+avatar.py
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/fiction/!svn/ver/1/1/utils/avatar.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/fiction/!svn/ver/1/1/utils/__init__.py
+END
+timer.py
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/fiction/!svn/ver/1/1/utils/timer.py
+END
+tools.py
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/fiction/!svn/ver/1/1/utils/tools.py
+END
+ostools.py
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/fiction/!svn/ver/1/1/utils/ostools.py
+END
+text.py
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/fiction/!svn/ver/1/1/utils/text.py
+END
+upload.py
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/fiction/!svn/ver/1/1/utils/upload.py
+END
+decorators.py
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/fiction/!svn/ver/1/1/utils/decorators.py
+END
+hashs.py
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/fiction/!svn/ver/1/1/utils/hashs.py
+END
+thread.py
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/fiction/!svn/ver/1/1/utils/thread.py
+END
+viewsbase.py
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/fiction/!svn/ver/1/1/utils/viewsbase.py
+END
+json.py
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/fiction/!svn/ver/1/1/utils/json.py
+END
+clean_json.py
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/fiction/!svn/ver/1/1/utils/clean_json.py
+END

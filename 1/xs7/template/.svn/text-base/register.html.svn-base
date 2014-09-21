@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}
+注册启书帐号
+{% endblock %}
+
+{% block css %}
+<style>
+
+#member_page
+{
+    border-top:2px solid #8b6f4f;
+}
+#member_page a
+{
+    color:#8b6f4f;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+        <div class="row">
+   <h2 style='color:#1e8d19;'> > {{ tips }} </h2>
+<div class="clearfix">
+        <form id = 'reg-form' action='/register/' method = 'POST' class="form-horizontal user_form">
+          {% csrf_token %}
+          <fieldset>
+            <legend>注册</legend>
+            <div class="control-group">
+                
+              <label class="control-label" for="input01">名称:</label>
+              <div class="controls">
+                <input type="text" class="input-large" name = 'name' id="input01"><span style='margin-left:10px;display:none;' id = 'input01-tip'>可用</span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input01">密码:</label>
+              <div class="controls">
+                <input type="password" class="input-large" name = 'password' id="input02"> <span style='display:none;' id = 'input02-tip'>可用</span>       
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input01">确定密码:</label>
+              <div class="controls">
+                <input type="password" class="input-large" id="input03">        <span style='display:none;' id = 'input03-tip'>可用</span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input01">邮箱:</label>
+              <div class="controls">
+                <input type="text" class="input-large" name='email'>   <span style='display:none;' id = 'input04-tip'>可用</span>     
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input01">验证码:</label>
+              <div class="controls">
+                <input type="text" class="input-small" name = 'validate' >    <img src = '/validate/'>   
+              </div>
+            </div>
+
+            <div class="control-group" style='*margin-left:160px;'>
+            <label class="l-label" for="optionsCheckbox"></label>
+            <div class="controls">
+              <label class = 'checkbox' id='input04'>
+                <input type = 'checkbox' id='input_ok' name = 'is_ok''>
+                我同意<a href = 'javascript:void(0);' data-toggle='modal' data-target='#myModal' alt='点击阅读' title='点击阅读'>《注册协议》</a>
+             </label>
+              <label class="checkbox">
+                <input type="checkbox" name='remember' id="optionsCheckboxs">          
+                记住我
+                <a href="#">忘记密码</a>
+              </label>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <a type ='submit' href="#" id = 'submit-button' class="btn btn btn-success">注册</a>
+            <span style = '{% if not error_msg %} display:none; {% endif %}color:red;' id= 'show_alert'>
+             {% if error_msg %}
+             验证码输入出错
+            {% else %}
+                请将资料填写完整
+             {% endif %}
+            </span></div>
+          </div>
+          </fieldset>
+        </form>
+        <div class="user_tips">
+          <p>已拥有账户吗？</p>
+          <p><a href="/login/">从这里登录！</a></p>
+          <div class="site">
+          <p>相关链接</p>
+          <p><a href = 'http://www.xs7.com'>www.xs7.com</a></p>
+          </div>
+        </div>
+      </div>
+        </div>
+<div style='width:700px;' class="modal hide" id="myModal">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">
+<h2 style='margin-left:auto;margin-right:auto;text-align:center;'>“启书”隐私权保护声明</h2>
+<p>启书网非常重视对您隐私的保护，在您使用启书提供的服务前，请您仔细阅读如下声明。</p>
+
+<p>为了给您提供更准确、更有针对性的服务，启书可能会以如下方式，使用您提交的个人信息。但启书会以高度的勤勉义务谨慎对待这些信息，在未征得您许可的情况下，不会将这些信息对外公开或向第三方提供。
+<p><b>保有您提供的信息</b></p>
+为了向您提供更好的用户服务，启书会在您自愿选择服务或提供信息的情况下收集您的个人信息，并将这些信息进行整合。请您在注册时详尽、准确地提供个人资料，并请及时更新。如果因注册信息不真实而引起的法律责任或相关后果，由您自行承担。任何时候均不要将您的帐号、密码转让或出借给他人、或向第三方披露。如发现您的帐号遭他人非法使用，应立即通知启书。因黑客行为或用户的保管疏忽等原因导致帐号、密码丢失等，启书不承担责任。
+<p><b>保有您的使用记录</b></p>
+当您使用启书的服务时，服务器会自动记录一些信息，包括URL、IP地址、浏览器的类型和使用的语言以及访问日期和时间等。
+在如下情况下，启书会遵照您的意愿或法律的规定披露您的个人信息（包括使用记录等），启书不承担由此引发的法律责任或后果：
+<ul>
+<li>（1）事先获得您的授权；</li>
+<li>（2）只有透露您的个人资料，才能提供您所要求的产品和服务；</li>
+<li>（3）根据有关法律法规或国家政策的要求；</li>
+<li>（4）按照相关政府主管部门或司法机关的要求；</li>
+<li>（5）为维护启书的合法权益；</li>
+<li>（6）您同意让第三方共享资料；</li>
+<li>（7）您违反了启书服务条款或任何其他产品服务的使用规定；</li>
+<li>（8）根据需要启书向提供产品或服务的代理人提供您的相关资料（除非另行通知，否则这些公司无权使用您的身份识别资料）。</li>
+</ul>
+<p><b>隐私权政策的修订：</b></p>
+<p>
+为了在符合国家法律政策的前提下提供更好的服务，启书会不时对隐私权政策进行修订，并会在网页中显著的位置及时发布，请您随时予以关注。修订后隐私权政策于公布后?? 日内实施，如因您未及时关注造成的后果，启书不承担任何责任。</p>
+
+<p><b>
+问题与建议：
+</b></p>
+<p>
+如有意见和建议，请及时告知我们。
+</p>
+
+<h2>启书会始终致力于在充分保护您隐私的前提下，为您提供更优质的体验和服务。
+
+<h2 style='text-align:center;'>
+“启书”的免责声明
+</h2>
+
+<p>“启书”提醒：在使用启书搜索引擎（以下简称启书）前，请您务必仔细阅读并透彻理解本声明。您可以选择不使用启书，但如果您使用启书，您的使用行为将被视为对本声明全部内容的理解与认可。</p>
+
+<p>
+启书搜索服务是根据您键入的信息（如关键字等）以非人工方式、自动检索有关的链接，除启书服务条款中的明确承诺之外，用户因使用启书服务而遭致的损失、意外等（比如因点击、访问、链接搜索结果或下载被启书链接到的第三方网站内容而感染电脑病毒），或侵犯第三方权利，均与启书无关，启书亦不承担任何法律责任。
+</p>
+<p>
+任何使用启书搜索链接到的第三方网站及其内容均系他人制作或提供，启书不保证该第三方网站上的任何内容的合法性和安全性。
+</p>
+<p>
+您应对使用搜索引擎的结果自行承担风险。启书不做任何形式的保证：不保证搜索结果满足您的要求，不保证搜索服务不中断，不保证搜索结果的安全性、正确性、及时性、合法性。因网络、通讯、第三方网站等任何原因而导致您不能正常使用启书服务，启书将不承担任何法律责任。
+</p>
+<p>
+启书尊重并保护启书用户的个人隐私，您注册的用户名、电子邮件地址等个人资料，非经您许可或根据相关法律、法规的规定，或有关主管机关的要求，启书不会主动地披露给第三方。启书提醒您：您在使用搜索引擎时输入的一切信息均不被认为是您的个人隐私资料。
+</p>
+<p>
+由于启书搜索采纳的是一种自动抓取技术，任何未禁链的网站、网页等均可能会被自动抓取。所以，如果不想被启书收录（即不被搜索到），请及时向启书提出，或者在其网站中根据拒绝蜘蛛协议（Robots Exclusion Protocol）加注拒绝收录的标记。否则，启书将依照搜索技术或行业惯例视其为可收录网站。
+</p>
+<p>
+启书搜索结果仅为临时再现相关链接信息之需，任何单位或个人认为启书搜索结果中显示的第三方网站链接或有关内容侵犯了自己的合法权利（如信息网络传播权、隐私权等）时，请及时向启书发出书面通知，并提供真实身份证明、权属证明及详细侵权情况证明。收到上述文件后，启书将会依法及时断开或屏蔽相关链接。        
+</p>
+</div>
+        <div class="modal-footer">
+        <a href="#"  data-dismiss="modal" class="btn">关闭</a>
+        </div>
+        </div>
+{% endblock %}
+{% block js %}
+<script src = '/site_media/js/register.js'></script>
+<script>
+$(document).ready(
+    function()
+    {
+    }
+);
+</script>
+{% endblock %}

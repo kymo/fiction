@@ -1,0 +1,503 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+小说: {{fiction.fiction_title}}
+{% endblock %}
+
+{% block css %}
+
+<style> 
+#newest_list
+{
+    cursor: hand;
+}
+#all_list
+{
+    cursor: hand;
+}
+.table td
+{
+    line-height: 15px;
+    border:0px;
+}
+.book-meta
+{
+    *float:left;
+    width:75%;
+}
+.cover
+{
+    *float:left;
+}
+table td
+{
+    font-size:13px;
+    width:200px;
+}
+#newest_list
+{
+    font-family:宋体,新宋体;font-weight:bold;font-size:16px;margin-left:10px;margin-right:10px;cursor:hand;
+    color:#831b1b;
+}
+#all_lists
+{
+    color : #776157;
+    font-family:宋体,新宋体;font-weight:bold;font-size:16px;margin-left:10px;margin-right:10px;cursor:hand;
+}
+.cover
+{
+    padding:5px;
+    border:1px solid #edd;
+}
+#all_lists:hover
+{
+    text-decoration:underline;
+
+}
+.top_list a
+{
+    color:#555;
+}
+.tips a
+{
+color:#555;
+}
+#show_chapter_urls
+{
+padding:10px;
+}
+#show_chapter_urls table
+{
+    width:960px;
+}
+#show_chapter_urls table a:hover
+{
+    text-decoration:underline;
+}
+#cnt_head
+{
+    height:20px;
+    border:1px solid #ddd;
+    width:94%;
+    color:#fff;
+    font-weight:bold;
+    background:#b17740;
+    margin-top:20px;
+    padding:5px;
+    padding-left:20px;
+    padding-right:20px;
+}
+.tips_chapter
+{
+    float:left;
+    width:60px;
+    padding:5px;
+    margin:5px;
+    margin-left:-40px;
+    margin-right:-6px;
+}
+.span12
+{
+    height:auto;margin-top:6px;border:1px solid #ddd;background:#fcfcfc;padding:15px;
+    
+}
+.cnt_chapter
+{
+    float:left;width:800px;padding:10px;border:1px solid #ddd;
+    margin:5px;
+    margin-top:10px;
+    margin-left:0px;
+}
+#cnt_body
+{
+    font-size:13px;
+}
+#tips_btn
+{
+    margin-left:auto;
+    margin-right:auto;
+}
+.btn_tips
+{
+    padding:4px;
+    margin:4px;
+    padding-left:8px;
+    padding-right:7px;
+    border:1px solid #ddd;
+}
+.btn_tips:hover
+{
+    background:#b17750;
+    color:#eee;
+}
+#cnt_foot
+{
+    margin-top:20px;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+<div style='width:100%;margin-top:-10px;'>
+      <span style='font-size:12px;color:#555;'>
+        当前位置
+        </span>
+        <span class='tips' style = 'margin-left:20px;color:#222;font-size:12px;'>
+        <a href='/'>首页 </a>
+        >
+        <a href = '/fiction/{{fiction.fiction_nid}}/'>{{fiction.fiction_title}}
+        </a>
+        >所有章节列表
+        </span>
+    </span>
+</div>
+<div class="row">
+            <div class="span12" style="">
+            <div id = 'top_title'>
+                
+                <h2 style='line-height:40px;text-align:center;font-size:20px;'>《{{fiction.fiction_title}}》</h2>
+                <h2 style = 'text-align:center;font-size:13px;'> 
+                    作者: {{fiction.author}}
+                    &nbsp;&nbsp;
+                    更新时间: {{fiction.update_time}}
+                </h2>
+            </div>
+
+            <div id = 'content'>
+                <div id = 'cnt_head'>
+                   <span style='padding-right:300px;'> 《{{fiction.fiction_title}}》最新章节目录 </span>
+                   <span style = 'padding-right:100px;'> 来源</span>
+                   <span style = 'padding-right:100px;'>时间</span>
+                
+                </div>
+
+                <div id = 'cnt_body'>
+                    <div style = 'padding:10px;padding-bottom:0px;margin-left:40px;border-left:2px solid #ddd;'>
+                    {% for item in chapters %}
+                        <div class='tips_chapter'>
+                            <div style = 'float:left;'>
+                                <font style='background:#fff;color:#aaa;font-family:微软雅黑,黑体;font-size:20px;'> 
+                                {{item.idx}}
+                                </font>
+                            </div>
+                            <div style='float:left;margin-left:10px;'>
+                            </div>
+                        </div>
+
+                        <div class='cnt_chapter'>
+                        {% for items in item.urls %}
+                            <div style='width:430px;float:left;'>
+                                <a href = '{{items.url}}'>{{items.title}}</a>
+                            </div>
+                            <div style = 'color:#999;float:left;width:100px;text-align:center;'>
+                                {{items.name}}
+                            </div>
+                            <div style = 'color:#999;float:left;width:200px;text-align:center;'>
+                                {{items.record_time}}
+                            </div>
+                            <div style =' clear:both;'></div>
+                        {% endfor %}
+                        </div>
+                        <div style = 'clear:both;'></div>
+                    {% endfor %}
+                    </div>
+                </div>
+
+                <div id = 'cnt_foot'>
+                    <div id = 'tips_btn' style='width:686px;height:40px;'>
+                        <a class='btn_tips'href='/fiction/{{fiction.fiction_nid}}/catelog/1'>
+                        首页
+                        </a>
+                        <a class='btn_tips'href='/fiction/{{fiction.fiction_nid}}/catelog/{{bef_page}}'>
+                            上一页
+                            </a>
+                        {% for item in bef_cur_page %}
+                               <a class='btn_tips' href='/fiction/{{fiction.fiction_nid}}/catelog/{{item}}'>
+                               
+                                {{item}}
+                                </a>
+                        {% endfor %}
+
+                            <a  style='background:#b17750;color:#fff;' class='btn_tips'href='/fiction/{{fiction.fiction_nid}}/catelog/{{pid}}'>
+                            {{pid}}
+                                </a>
+                        {% for item in nxt_cur_page %}
+                               <a class='btn_tips'href='/fiction/{{fiction.fiction_nid}}/catelog/{{item}}'>
+                                {{item}}
+                                </a>
+                        {% endfor %}
+                            <a class='btn_tips'href='/fiction/{{fiction.fiction_nid}}/catelog/{{nxt_page}}'>
+                            下一页
+                                </a>
+                            <a class='btn_tips'href='/fiction/{{fiction.fiction_nid}}/catelog/{{r_page}}'>
+                            末页
+                            </a>
+                        共 {{tot_num}}条记录
+                    </div>
+                </div>
+            </div>
+           </div>
+           <!--
+            <div class = 'span12' style='width:950px;margin-top:10px;border:1px solid #ddd;border-top:2px solid green;background:#fcfcfc;'>
+               <div style = 'padding:10px;padding-bottom:5px;border-bottom:1px solid #ddd;border-radius:4px;'>
+                    <span style='font-size:15px;font-weight:bold;color:#000;'>
+                        猜你喜欢
+                    </span>
+                </div>
+              
+            
+            </div>
+            -->
+        </div>
+        {% if not is_auth %}
+        <div class="modal hide" id="myModal">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"  >&times;</button>
+        </div>
+        <div class="modal-body">
+        <p>登录用户才能评分哟</p>
+        <a href = '/login/'>我有帐号</a> <a href = '/register/'>注册</a>
+        </div>
+        <div class="modal-footer">
+        <a href="#"  data-dismiss="modal" class="btn">关闭</a>
+        </div>
+        </div>
+        {% endif %}
+<div id = 'float_menu' style = 'display:none;z-index;444;position:absolute;
+top:100px;left:100px;width:160px;height:30px;color:#eee;background:rgba(10,10,10,0.9);border-radius:3px;padding-top:10px;padding-left:60px;'>
+    <img src = '/site_media/image/load.gif'>
+</div>
+
+{% endblock %}
+{% block js %}
+<script src = '/site_media/js/jquery.raty.js'></script>
+<script src = '/site_media/js/json2.js'></script>
+<script src = '/site_media/js/index.js'></script>
+<script>
+var cur_page = "asc";
+var newest_page = $('#show_list').html();
+var all_page = "";
+$(document).ready(
+    function(){
+
+
+    //save cookie
+    character('/fiction/{{fiction.fiction_nid}}/', '', '{{fiction.fiction_nid}}', '{{csrf_token}}'); 
+    $('#star').raty(
+    {
+        click:function(score, evt)
+        {
+            {% if is_auth %}
+            //get cookie
+               $('<div>').load(
+                    '/grading/',
+                    {'score' : String(score),
+                        'fiction_nid' : '{{fiction.fiction_nid}}',
+                        'csrfmiddlewaretoken' : '{{csrf_token}}',
+                        'user_nid' : '{{user.nid}}'
+                    },
+                    function()
+                    {   
+                        var data = $(this).html();
+                        if(data == 'ok')
+                        {
+                            alert('评分成功');
+                        }
+                        else if(data == 'again')
+                        {
+                            alert('已经评过一次.');
+                        }
+                    }
+                );
+            {% endif %}
+        }
+    }
+    );
+    $('.btn_tips').mouseover
+    (
+        function()
+        {
+            
+        }
+    );
+    $('#descending').click(
+        function()
+        {
+            if(cur_page != 'des')
+            {
+                var content_2 = $('#show_list_des').html();
+                var content_1 = $('#show_list_asc').html();
+                $('#show_list_des').html(content_1);
+                $('#show_list_asc').html(content_2);
+                $('#descending').css('color', '#b04354');
+                $('#descending').css('font-weight', 'bold');
+                $('#ascending').css('color', '#b17750');
+                $('#ascending').css('font-weight', '');
+                cur_page = 'des';
+            }
+        }
+    );
+
+    $('#ascending').click(
+        function()
+        {
+            if(cur_page != 'asc')
+            {
+                var content_2 = $('#show_list_des').html();
+                var content_1 = $('#show_list_asc').html();
+                $('#show_list_des').html(content_1);
+                $('#show_list_asc').html(content_2);
+                $('#descending').css('color', '#b17750');
+                $('#descending').css('font-weight', '');
+                $('#ascending').css('color', '#b04354');
+                $('#ascending').css('font-weight', 'bold');
+                cur_page = 'asc';
+            }
+        }
+    );
+    $('#all_list').click(
+        function()
+        {
+        if(cur_page != 'all')
+                {
+                    cur_page = "all";
+                    $('#all_list').css('color', '#831b1b');
+                    $('#newest_list').css('color', '#776157');
+                    newest_page = $('#show_list').html();
+                    if(all_page)
+                    {
+                        $('#show_list').html(all_page);
+                    }
+                    else
+                    {
+                        $('#show_list').html('加载中.');
+                        //get the all chapters
+                        $('<div>').load(
+                            '/get_all_chapters/',
+                            {'csrfmiddlewaretoken' : '{{ csrf_token }}',
+                            'fiction_nid' : '{{fiction.fiction_nid}}'},
+                            function()
+                            
+                            {
+                                var content = "<thead><tr> <th colpadding=20>所有章节(单击标题查看所在网站信息)</th></thead><tbody>"
+                                var data =$(this).html();
+                                data = eval(data);
+                                for(var t = 0; data[t] != null; t += 3)
+                                {
+                                    content += "<tr><td><a href='javascript:void(0);' onclick=\"show_menu('" + data[t]['chapter_id'] + "');\" id = 'fiction_" + data[t]['chapter_id'] + "'>" + data[t]['title'] + "</a></td>";
+                                    if(data[t + 1] != null)
+                                        content += "<td><a href='javascript:void(0);'  onclick=\"show_menu('" + data[t + 1]['chapter_id'] + "');\" id = 'fiction_" + data[t + 1]['chapter_id'] + "'>" + data[t + 1]['title'] + "</a></td>"
+                                    if(data[t + 2] != null)
+                                        content += "<td><a href='javascript:void(0);' onclick=\"show_menu('" + data[t + 2]['chapter_id'] + "');\"  id = 'fiction_" + data[t + 2]['chapter_id'] + "'>" + data[t + 2]['title'] + "</a></td></tr>"
+                                }
+                                $('#show_list').html(content);
+                            }
+                        );
+                    }
+                }
+            }
+         );
+         $('#newest_list').click(
+            function()
+            {
+                if(cur_page != 'newest')
+                {
+                    cur_page = "newest";
+                    $('#newest_list').css('color', '#831b1b');
+                    $('#all_list').css('color', '#776157');
+                    //get newest list
+                    //save all content
+                    all_page = $('#show_list').html();
+                    if(newest_page)
+                    {
+                        $('#show_list').html(newest_page);
+                    }
+                }
+            }
+        );
+        $('#newest_list').mouseover(
+            function(){
+            }
+        );
+        $('#add_shelf').mouseover(
+            function()
+            {
+                $('#add_shelf').css('cursor', 'hand');
+                $('#add_shelf').css('background', '#8a3e26');
+            }
+        );
+        $('#add_shelf').mouseout(
+            function()
+            {
+                $('#add_shelf').css('cursor', 'point');
+                $('#add_shelf').css('background', '#b9735d');
+            }
+        );
+        {% if is_auth %}
+        $('#add_shelf').click(
+            function()
+            {
+                //add this book in my shelf
+                $("<div>").load(
+                    '/add_shelf/',
+                    {'user_id' : '{{user.id}}',
+                    'fiction_id' : '{{fiction.id}}',
+                    'csrfmiddlewaretoken' : "{{ csrf_token }}"},
+                    function()
+                    {
+                        $('#add_shelf').css('background', '#ddd');
+                        $('#add_shelf').unbind('mouseover');
+                        $('#add_shelf').unbind('mouseout');
+                        $('#tips').fadeOut(20);
+                        $('#tips').html("<span style='font-size:13px;' id = 'remove_tip'>已加入书架</span>");
+                        $('#tips').fadeIn(20);
+                    }
+                );
+            }
+        );
+        
+        {% endif %}
+        $('#remove_button').click(
+            function()
+            {
+                 $('<div>').load(
+                    '/remove/',
+                    {'csrfmiddlewaretoken' :'{{csrf_token}}',
+                    'fiction_nid' : '{{fiction.fiction_nid}}'
+                    },
+                    function()
+                    {
+                        $('#remove_tip').html('已移除');
+                    }
+                 );
+            }
+        );
+    }
+);
+function show_menu(id)
+{
+    var left_m = $('#fiction_' + id).offset().left;
+    var top_m = $('#fiction_' + id).offset().top;
+    $('#float_menu').css('left', left_m + 30);
+    $('#float_menu').css('top', top_m);
+    $('#float_menu').fadeIn(200);
+    $('<div>').load(
+        '/get_chapter_url/',
+        {'chapter_id': id,
+        'csrfmiddlewaretoken': '{{csrf_token}}'},
+        function()
+        {
+            var data = eval($(this).html());
+            var content  =""
+            for(var i = 0; data[i] != null; i ++)
+            {
+                content += "<span><a target = '_blank' href = '/read_book?frm=" + data[i].frm + "&id=" + id + "&book_url=" + data[i].url + "'>" + data[i].title + "</a></span>";
+            }
+            $('#float_menu').html(content);
+        }
+    );
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+小说分类浏览-小说分类浏览
+{% endblock %}
+
+{% block css %}
+<style>
+
+.cover
+{
+    width: 60px;
+}
+
+.cover img
+{
+    width:60px;
+    height:80px;
+}
+#infor
+{
+    width:900px;
+    height:300px;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="row">
+
+<div id = 'infor'>
+
+    <div id = 'form' style='padding-left:50px;'>
+
+        您的建议</br>
+        <textarea name = 'feedback' id='fb' style='width:400px;height:200px;' ></textarea><br/>
+        您的联系方式<br/>
+        <input type = 'text' id = 'cw' name = 'contact_way'><br/>
+        <input type = 'submit' onclick='send_back_feedback();' class = 'btn btn-gray'>
+
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block js %}
+
+
+<script>
+
+function send_back_feedback()
+{
+    $('<div>').load(
+        '/feedback/',
+        {'feedback' : $('#fb').text(),
+            'contact_way' : $('#cw').val(),
+            'csrfmiddlewaretoken' : '{{csrf_token}}'},
+            function()
+            {
+                alert('谢谢您的建议.');
+            }
+        );
+}
+</script>
+{% endblock %}

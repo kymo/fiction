@@ -1,0 +1,332 @@
+{% extends 'base.html' %}
+
+{% block title %}
+启书小说搜索，实时更新最新小说信息，推荐你喜欢的小说
+{% endblock %}
+
+{% block css %}
+<link href = '/site_media/css/kymo.css' rel = 'stylesheet'>
+
+<style>
+
+#member_page
+{
+    color:#eee;
+    border-top:2px solid #8b6f4f;
+}
+#member_page a
+{
+    color:#8b6f4f;
+}
+#read_before
+{
+    margin-bottom:10px;
+}
+.book_title a
+{
+    font-size:12px;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+    <div style = 'margin-bottom:10px;font-size:20px;color:#462d12;paddgin:10px;width:900px;'>欢迎你 {{user.name}}</div>
+        <div class="row">
+          <div class="span12">
+            <div id = 'read_before'>
+                <p style = 'font-size:15px;color:#bd6a4e;font-weight:bold;'>最近阅读记录(临时)
+                <span style = 'font-size:12px;'>
+                    <a href = 'javascript:void(0);' onclick = 'clean_history();'>清除浏览数据</a> 
+                    <a href='javascript:void(0);' onclick='save_to_backend();' style='text-decoration:inline;'>同步</a>
+                    <img id = 'saving_gif' src = '/site_media/image/load.gif' style='display:none;'>
+                </span>
+                </p>
+                <div style='width:900px;border:1px solid #d6d3d3;font-size:12px;padding:10px;display:none;' id='show_history'>
+                </div>
+            </div>
+        </div>
+        <div class = 'span12' style=''>
+             <div id = 'menu' style='font-family:宋体;'> 
+               <a href='javascript:void(0);'> 
+                    <span  id = 'rec' style='background:#8f403d;color:#fff;padding:3px;'>系统推荐</span>
+               </a>
+               <a href='javascript:void(0);'> 
+               <span id = 'shelf' style='padding:3px;'>我的书架</span>
+               </a>
+               <a href='javascript:void(0);'> 
+                <span id = 'history'style='padding:3px;'>阅读历史</span>
+               </a>
+               <a href='javascript:void(0);'> 
+                <span id = 'msg'style='padding:3px;'>消息</span>
+               </a>
+            </div>
+        </div>
+        <div class="span12" id = 'show_infor_rec' style='font-family:宋体,新宋体;border:1px solid #d6d3d3;width:900px;margin-top:px;padding:10px;'> 
+            {% for item in out %}
+                <span style = 'font-size:15px;font-weight:bold;padding:10px;'>{{ item.key }}</span>
+                <ul class="book-list">
+                    {% for item in item.fictions %}
+
+                    <li style='*display:inline;'>
+                        <a href="/fiction/{{item.fiction_nid}}/" class="book-img">
+                            <img src="{{item.fiction_avatar_url}}" alt=""></a>
+                        <div class="book-info">
+                            <h4 class="book-title">
+                                <a style='font-size:12px;' href="/fiction/{{item.fiction_nid}}/">
+                                {{item.fiction_title|slice:"6"}}
+                                </a>
+                            </h4>
+                            <span class="author">{{item.author}}</span>
+                        </div>
+                    </li>
+                   {% endfor %}
+                </ul>
+            {% endfor %}
+        </div>
+        <div class = 'span8' id = 'show_history_area' style = 'font-family:宋体,新宋体;display:none;padding:10px;border:1px solid #d6d3d3'>
+        </div>
+         <!-- 我的书架 -->
+         <div class="span8" id = 'show_infor_shelf' style='border:1px solid #d6d3d3;display:none;padding:10px;'>
+            <a href='javascript:void(0);'>
+                <span style = 'font-size:12px;cursor:hand;padding:5px;' onclick="change_content('0');" id ='style_0'>全部</span>
+            </a>
+            {% for item in shelf_fic %}
+            <a href='javascript:void(0);'>
+            <span style = 'font-size:12px;cursor:hand;background:#e1e8e5;padding:5px;'  onclick="change_content('{{item.id}}');"
+            id = 'style_{{item.id}}'>{{ item.key }}({{item.number}})</span>
+            </a>
+            {% endfor %}
+            <hr style='border:0px;border-top:1px solid #ddd;'>
+            <ul class="book-list" id = 'shelf_book_list'>
+                    {% for item in all %}
+                    <li style='margin-left:-2px;*display:inline;' id = "change_{{item.id}}" onmouseover="change_color('#change_{{item_id}}')" onmouseleaver="change_color_back('#change_{{item_id}}');">
+                        <a href="/fiction/{{item.fiction_nid}}/" class="book-img">
+                            <img src="{{item.fiction_avatar_url}}" alt=""></a>
+                        <div class="book-info">
+                            <h4 class="book-title">
+                                <a style='font-size:12px;' href="/fiction/{{item.fiction_nid}}/">
+                                {{item.fiction_title|slice:"6"}}
+                                </a>
+                            </h4>
+                            <span class="author">{{item.author}}</span>
+                        </div>
+                    </li>
+                   {% endfor %}
+                </ul>
+        </div>
+        <!-- 我的书记 结束 -->
+    </div>
+
+
+{%  endblock %}
+{% block js %}
+
+<script src = '/site_media/js/index.js'></script>
+<script>
+var page_content = $('#show_infor').html();
+var cur_page = '#rec';
+var index = '0';
+$(document).ready(
+    function()
+    {
+        $('#style_0').css('background', '#cecece');
+        after_click('#rec');
+       after_click('#shelf');
+       after_click('#msg');
+       after_click('#history');
+        show_history('{{csrf_token}}', 'home');
+    }
+
+);
+
+function clean_history()
+{
+    clean_log();
+}
+
+function save_to_backend()
+{
+$('#saving_gif').fadeIn(200);
+    var data = $.cookie('read_log');
+    $('<div>').load(
+        '/save_read_log/',
+        {'log' : '[' + data + ']',
+        'csrfmiddlewaretoken' : '{{csrf_token}}'},
+        function()
+        {
+            $('#saving_gif').fadeOut(200);
+            data = eval('[' + data + ']');
+            var new_log = "";
+            var j = 0;
+            for(j = 0 ; data[j] != null; j ++)
+            {
+                new_log += '{"tag":"0","chapter_id":"' + data[j].chapter_id + '","fiction_nid":"' + data[j].fiction_nid + '","url":"' + data[j].url + '","time":"' + data[j].time + '"}';
+                if(data[j + 1] != null)
+                    new_log += ',';
+            }
+            $.cookie('read_log', new_log, {'expires' : 7, 'path' : '/'});
+        }
+    );
+}
+
+function chagne_color_back(id)
+{
+}
+function return_color_back(id)
+{
+}
+function change_content(id)
+{
+    if(id != index)
+    {
+        $('#style_' + index).css('background', '#e1e8e5');
+        $('#style_' + id).css('background', '#cecece');
+        index = id;
+        load_type_fiction(id);
+    }
+}
+
+function load_type_fiction(id)
+{
+    $('<div>').load(
+        '/load_fiction_from_type/',
+        {'type' : id,
+        'csrfmiddlewaretoken' : '{{csrf_token}}'},
+        function()
+        {
+            var data = $(this).html();
+            data = eval(data);
+            var content = "";
+            for(var i = 0; data[i] != null; i ++)
+            {
+                  content +=  "<li style='margin-left:-2px;*display:inline;' id = 'change_"+ data[i].id +
+                  "' onmouseover=\"change_color('#change_" + data[i].id + "')\" onmouseleaver=\"" + 
+                  "change_color_back('#change_" + data[i].id + "');\">" +
+                  "<a href=\"/fiction/" + data[i].nid + "/\" class=\"book-img\">" + 
+                  "<img src=\"" + data[i].avatar + "\" alt=\"\"></a>" + 
+                  "<div class=\"book-info\"><h4 class=\"book-title\">" + 
+                  "<a href=\"/fiction/" + data[i].nid + "/\">" + 
+                 data[i].title +"</a></h4><span class=\"author\">" + 
+                 data[i].author + "</span></div> </li> ";
+            }
+            $('#shelf_book_list').html(content);
+        }
+    );
+}
+function after_click(id)
+{
+
+
+        $(id).mouseover(
+            function()
+            {
+                if(id != cur_page)
+                {
+                    $(id).css('color', '#fff');
+                    $(id).css('background', '#8f403d');
+                }
+            }
+        );
+
+        $(id).mouseout(
+            function()
+            {
+                if(id != cur_page)
+                {
+                    $(id).css('color', '#b17750');
+                    $(id).css('background', '');
+                }
+            }
+        );
+
+
+
+    $(id).click(
+    function(){
+    if(id != cur_page)
+    {
+        $(id).css('color', '#fff');
+        $(id).css('background', '#8f403d');
+        $(cur_page).css('color', '#b17750');
+        $(cur_page).css('background', '');
+        cur_page = id;
+
+        if(id == '#shelf')
+        {
+            $('#show_infor_rec').css('display', 'none');
+            $('#show_history_area').css('display', 'none');
+            $('#show_infor_shelf').css('display', '');
+        }
+        else if(id == '#rec')
+        {
+            
+            $('#show_infor_rec').css('display', '');
+            $('#show_infor_shelf').css('display', 'none');
+            $('#show_history_area').css('display', 'none');
+        }
+        else if(id == '#history')
+        {
+            $('#show_infor_rec').css('display', 'none');
+            $('#show_infor_shelf').css('display', 'none');
+            $('<div>').load(
+                '/get_history/',
+                {'csrfmiddlewaretoken': '{{csrf_token}}'},
+                function()
+                {
+                    
+                    var data= $(this).html();
+                    data = eval(data);
+                    var content = "";
+                    for(var j = 0;data[j] != null; j ++)
+                    {
+                        if(data[j].state == '0')
+                        {
+                            
+                    content += '<li style="padding:3px;background:#ddd;" id="li_' + data[j].id + '" onmouseout="return_li_color(\'' + data[j].id +'\');" onmouseover="change_li_color(\'' + data[j].id +'\');">' + data[j].time + ': <a href = "/fiction/' + 
+                    data[j].ficiton_nid + '">' + data[j].fiction_title + '</a> 阅读到 <a href = "' + data[j].chapter_url + '">' + 
+                    data[j].chapter_title + '</a>' + '<a href="javascript:void(0);"  onclick="del(\'' + data[j].id  + '\');" style="float:right;margin-right:20px;display:none;" " id = "del_' + data[j].id + '">删除</a>'; 
+                        }
+                        else
+                        {
+                    content += '<li style="padding:3px;background:d;" id = "li_' + data[j].id + '" onmouseout="return_li_color(\'' + data[j].id +'\');" onmouseover = "change_li_color(\'' + data[j].id + '\')";>' + data[j].time + ': <a href = "/fiction/' + 
+                    data[j].fiction_nid + '">' + data[j].fiction_title + '</a> 最新章节: ' + data[j].chapter_title +'<a href="javascript:void(0);" onclick="del(\'' + data[j].id  + '\');" style="display:none;"style="float:right;margin-right:20px;" id = "del_' + data[j].id + '">删除</a>';
+                        }        
+                    }
+                    if(content == "")
+                        $('#show_history_area').html("无");
+                    else
+                        $('#show_history_area').html(content);
+                    $('#show_history_area').css('display', '');
+                }
+            );
+        }
+    }});
+}
+
+function del(id)
+{
+    $('<div>').load(
+        '/del_read_history/',
+        {'id' : id,
+            'csrfmiddlewaretoken' : '{{csrf_token}}'},
+        function()
+        {
+            $('#li_' + id).css('display', 'none');
+        }
+    );
+}
+
+function change_li_color(id)
+{
+    $('#li_' + id).css('background', '#f7f7f7');
+    $('#del_' + id).css('display', '');
+    $('#del_' + id).css('float', 'right');
+}
+function return_li_color(id)
+{
+    $('#li_' + id).css('background', '#fff');
+    $('#del_' + id).css('display', 'none');
+}
+</script>
+
+{% endblock %}

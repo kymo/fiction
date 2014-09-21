@@ -1,0 +1,265 @@
+body{
+    color: #373737;
+    font:normal 14px/1.625 "Helvetica Neue", Arial, "Hiragino Sans GB", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
+}
+a{color:#B1775D;}
+a:hover{text-decoration:none;color:#825d5b;}
+ul,li {list-style: none;*display:inline-block;*list-style-type:none;*list-style:none;margin:0;}
+h1{font-size: 18px;line-height:24px;font-weight:bold;color:#222;margin:0;margin-bottom:10px;}
+h2{font-size: 15px;line-height: 18px;font-weight: normal;color: #111;}
+h4{font-size: 14px;margin:5px 0;}
+.header{
+    padding-top:0px;
+    margin-bottom: 30px;
+    background: #f7f7f7;
+}
+.well{background-color: #f6f6f1;}
+.nav-warp{
+    position: relative;
+    overflow: hidden;
+    zoom: 1;
+    border-bottom: 1px solid #e5ebe4;
+}
+.logo{
+    float: left;
+    height: 56px;
+    width: 145px;
+    margin: 0 13px 0 0;
+    line-height: 56px;
+}
+.logo a{
+    font-size: 25px;
+    font-weight: 700;
+    color: #614e3c;
+}
+.search{
+    position: relative;
+    overflow: hidden;
+    zoom: 1;
+    padding: 15px 0 10px 30px;
+    width:525px;
+}
+.search form{margin:0;}
+.btn-gray{
+    color: #FFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-color: #A4A399;
+    background-image: -moz-linear-gradient(top,#A4A399,#999787);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#A4A399),to(#999787));
+    background-image: -webkit-linear-gradient(top,#A4A399,#999787);
+    background-image: -o-linear-gradient(top,#A4A399,#999787);
+    background-image: linear-gradient(to bottom,#A4A399,#999787);
+    background-repeat: repeat-x;
+    border-color: #222 #222 #000;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444',endColorstr='#ff222222',GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);*/
+}
+.btn-gray:hover, .btn-gray:focus, .btn-gray:active, .btn-gray.active, .btn-gray.disabled, .btn-gray[disabled] {
+color: #FFF;
+background-color: #A4A399;
+}
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
+border-color: rgba(164,163,153, 0.8);
+outline: 0;
+outline: thin dotted 9;
+-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(164,163,153, 0.6);
+-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(164,163,153, 0.6);
+box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(164,163,153, 0.6);
+}
+.weibo{
+    position: absolute;
+    right:45px;
+    bottom: 10px;
+    font-size: 12px;
+    height:35px;
+    vertical-align: bottom;
+}
+.weibo a{
+    margin-left:10px;
+}
+.nav-list{
+    width: 940px;
+    margin:0 auto;
+}
+.nav-items{
+    list-style: none;
+    margin: 0;
+    *display:inline-block;
+}
+.nav-items li{
+    *display:inline-block;
+    display:inline-block;
+    margin-right:40px;
+    line-height: 45px;
+}
+.nav-items li a{
+    padding: 12px 0;
+}
+#dl{margin-right:10px;}
+.book-items li{
+    display:inline-block;
+    width:48%;
+}
+.book-items li a{
+    width:100%;
+    font-size: 14px;
+    height: 32px;
+    line-height:32px;
+    display:inline-block;
+    border-bottom:1px solid #eee;
+    text-align: center;
+}
+.book-items li a:hover{
+    background: #f2f2ec;
+    color: #825d5b;
+}
+.book-list li{
+    display:inline-block;
+    margin: 5px 10px;
+}
+.book-img img{
+    width:100px;
+    height:140px;
+}
+.book-info {
+    display: block;
+    height:50px;
+}
+.link-more{font-size: 12px; margin-left:15px;}
+.author{
+    font-size: 12px;
+    color:#afafaf;
+}
+.table th {
+    font-weight: normal;
+}
+.top li{
+    border-bottom: 1px dashed #DDD;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.cover{
+    display:inline-block;
+    width:100px;
+    margin-right:18px;
+}
+.cover img{
+    width:100px;
+    height:140px;
+}
+.top-list{
+    display: inline-block;
+    height:140px;
+    width:165px;
+    vertical-align: top;
+}
+.top-list .nub{
+    font-size: 17px;
+    font-family: serif;
+}
+.top-text{
+    font-size: 12px;
+    text-indent: 2em;
+    color: #555;
+}
+.user_tips {
+    float: right;
+    width: 250px;
+    padding-top: 80px;
+}
+.user_form {
+    float: left;
+    width: 600px;
+}
+.site {
+    margin-top: 30px;
+    color: #BBB;
+    font-size: 12px;
+}
+legend{
+    border-bottom-color: #eee;
+}
+.book-intro{
+    border-bottom: 1px solid #EDEDE7;
+    padding-bottom: 13px;
+    margin-bottom: 13px;
+}
+.book-meta{
+    display:inline-block;
+    vertical-align: top;
+    width:60%;
+}
+.book-meta p{
+    display:inline-block;
+    width:48%;
+    font-size: 12px;
+    margin: 0;
+}
+.book-abstract{
+    margin:20px 0;
+    border-bottom: 1px solid #EDEDE7;
+    padding-bottom:12px;
+}
+.info p{
+    text-indent:2em;
+    font-size: 13px;
+}
+.book-title{margin-bottom:10px;}
+.book-title a{
+    font-size: 15px;
+    font-weight:bold;
+    color: #B17357;
+}
+.cate{
+    width:80%;
+}
+.cate p{
+    display: block;
+    width:100%;
+}
+.cate-nav{
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    border-bottom:1px solid #EDEDE7; 
+}
+.cate-nav h3{
+    font-size: 18px;
+    line-height:36px;
+    margin:0;
+}
+.cate-nav li{
+    display:inline-block;
+    margin:0 6px;
+}
+.list-more{
+    width:100%;
+    text-align:center;
+}
+.label{
+    color: #555;
+    background-color: #fff;
+    font-weight:normal;
+}
+.footer{
+    margin-top:35px;
+    padding: 10px 0;
+    overflow: hidden;
+    font-size: 12px;
+    font-family: serif;
+}
+.footer .inner {
+    padding: 10px 0 0;
+    border-top: 1px solid #E7E7DC;
+}
+.footer .copyright {
+    float: left;
+}
+.footer .ft-nav {
+    float: right;
+}
+.ft-nav a{
+    margin:0 3px;
+}
+.fl{float:left;}.fr{float:right;}.psr{position: relative;} .psa{position:absolute;}.mb20{margin-bottom:20px;}

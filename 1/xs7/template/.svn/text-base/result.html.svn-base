@@ -1,0 +1,370 @@
+ {% extends "base.html" %}
+
+{% block title %}
+    搜索关键字 {{key_word}} 的结果 --启书小说搜索
+ {% endblock %}
+
+ {% block css %}
+ <style>
+ .blks
+ {
+ color:black;
+ }
+ .rd
+ {
+ color:red;
+ }
+ #show_area
+ {
+    padding:4px;
+ }
+ .book-intro 
+ {
+    height:80px;
+    height:80px\9;
+    border-bottom:1px dashed #b6b66f;
+}
+ .info p
+ {
+    font-family:新宋体,宋体;
+ }
+.book-items li
+{
+    *display:inline;
+}
+</style>
+ {% endblock %}
+ {% block main %}
+<div class="row">
+
+ <div class="span4" style='width:230px;'>
+    <div style ='border:1px solid #ddd;background:#fff;padding:5px;'> 
+        <h2 style='margin-left:px'><div style='border-bottom:2px solid #b17750;'>搜索结果分类</div></h2>
+            <ul class="book-items mb20">
+                <li id='li-0'>
+                    <a href="javascript:void(0);" id = 'cate-0'>
+                    全部(<span id='all_0'>{{total}}</span>)</a>
+                </li>
+                {% if category.c21 != 0 %}
+                <li id='li-21'>
+                    <a href="javascript:void(0);" id = 'cate-21'>玄幻(<span id='all_21'>{{category.c21}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if category.c1 != 0 %}
+                <li id='li-1'>
+                    <a href="javascript:void(0);" id = 'cate-1'>奇幻(<span id='all_1'>{{category.c1}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if category.c22 != 0 %}
+                <li id='li-22'>
+                    <a href="javascript:void(0);" id = 'cate-22'>武侠(<span id='all_22'>{{category.c22}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if category.c3 != 0 %}
+                <li id = 'li-3'>
+                    <a href="javascript:void(0);" id = 'cate-3'>仙侠(<span id='all_3'>{{category.c3}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if category.c4 != 0 %}
+                <li id = 'li-4'>
+                    <a href="javascript:void(0);" id = 'cate-4'>都市(<span id='all_4'>{{category.c4}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if category.c5 != 0 %}
+                <li id = 'li-5'>
+                    <a href="javascript:void(0);" id = 'cate-5' >历史(<span id='all_5'>{{category.c5}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if category.c6 != 0 %}
+                <li id = 'li-6'>
+                    <a href="javascript:void(0);" id ='cate-6'>军事(<span id='all_6'>{{category.c6}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if category.c7 != 0 %}
+                <li id = 'li-7'>
+                    <a href="javascript:void(0);" id = 'cate-7'>游戏(<span id='all_7'>{{category.c7}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if category.c8 != 0 %}
+                <li id = 'li-8'>
+                    <a href="javascript:void(0);" id = 'cate-8'>竞技(<span id='all_8'>{{category.c8}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if category.c9 != 0 %}
+                <li id = 'li-9'>
+                    <a href="javascript:void(0);" id = 'cate-9'>科幻(<span id='all_9'>{{category.c9}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if category.c10 != 0 %}
+                <li id = 'li-10'>
+                    <a href="javascript:void(0);" id = 'cate-10'>灵异(<span id='all_10'>{{category.c10}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if category.c15 != 0 %}
+                <li id = 'li-15'>
+                    <a href="javascript:void(0);" id = 'cate-15'>青春(<span id='all_15'>{{category.c15}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if category.c12 != 0 %}
+                <li id = 'li-12'>
+                    <a href="javascript:void(0);" id = 'cate-12'>同人(<span id='all_12'>{{category.c12}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if category.c14 != 0 %}
+                <li id = 'li-14'>
+                    <a href="javascript:void(0);" id = 'cate-14'>图文(<span id='all_14'>{{category.c14}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if category.c31 != 0 %}
+                <li id = 'li-31'>
+                    <a href="javascript:void(0);" id = 'cate-31'>文学(<span id='all_31'>{{category.c31}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if category.c41 != 0 %}
+                <li id = 'li-41'>
+                    <a href="javascript:void(0);" id = 'cate-41'>女生(<span id='all_41'>{{category.c41}}</span>)</span></a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div style = 'padding:5px;margin-top:20px;background:#fff;border:1px solid #ddd;'>
+            <h2><div style='border-bottom:2px solid #b17750;'>系统推荐</div></h2>
+            <ul id = 'show_rec' class="top">
+                <img src = '/site_media/image/loading.gif'>
+            </ul>
+        </div>
+    </div>
+
+    <div class="span8" style='padding-left:20px;width:690px;'>
+        <div class="cate-nav">
+        <form style='margin:0px;' action='/search/' method = 'POST'>
+                    {% csrf_token %}
+                    <div class="input-append">
+                        <input class="span5" style='height:30px;width:300px;' id="appendedInputButton" type="text" name='q'>                        
+                        <input class="btn" type="submit" style='width:70px;height:40px;'value = '搜索'>
+                    </div>
+        </form>
+            <span style='font-weight:bold;'>关于"{{key_word}}",小七为您找到了{{total}}个结果 </span>
+        </div>
+        <ul id = 'show_area'>
+        {% for item in outcome %}
+            <li>
+                <div class="book-intro">
+                    <div class="cover" style='float:left;margin-right:10px;width:60px;'>
+                    <a href=""><img style='height:78px;'src="{{item.fiction_url}}" alt=""></a></div>
+                    <div class="book-meta cate" style='float:left;width:88%;' >
+                        <div class="book-title" style='font-size:13px;margin-bottom:0px;'>
+                            <a style = 'font-size:13px;' href='/fiction/{{item.fiction_nid}}'>
+                            {% autoescape off %}
+                            {{ item.fiction_title }}
+                            {% endautoescape %}
+                            </a>
+                        </div>
+                        <p style='color:#5d8868;' ><span class="label">作者：</span><span class="lable-text">{{item.fiction_author}}</span>
+                            <span class="label">分类：</span><span class="lable-text">{{item.fiction_style}}</span>
+                            <span class="label">评分：</span><span class="lable-text">{{item.fiction_score}}</span>
+                            <span class="label">首次收录于：</span><span class="lable-text">{{item.fiction_site}}</span>
+                        </p>
+                        <div class="info" style='font-size:12px;'>
+                            <p style='font-size:12px;'>
+                            {% autoescape on %}
+                            {{item.fiction_intro|escape }}...
+                            {% endautoescape %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+            </ul>
+            <div class="list-more">
+                <a id='previous_page' href = 'javascript:void(0);'>上一页</a>当前第<span id = 'current_page'>1</span> 页<a id='next_page' href = 'javascript:void(0);'>下一页</a> 共<span id = 'total_page'>{{total_page}}</span>页
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+{% block js %}
+<script src = '/site_media/js/index.js'></script>
+<script>
+var cur_page = 1;
+var style = '0';
+var total = {{total}};
+var total_page = {{total_page}};
+var datas = ['1', '2', '22', '4', '5', '6', '7', '8', '9', '10', '12','14', '31', '41', '21', '15'];
+$(document).ready(
+function()
+{
+    //save cookies
+    save_search_cookies('{{key_word}}');
+    get_recmmond();
+    category_add_click_evt('0');
+    for(var i = 0;i < 16;i ++)
+    {
+        category_add_click_evt(datas[i]);
+    }
+    $('#previous_page').click(
+        function()
+        {
+            if(cur_page > 1)
+            {
+                
+                set_content(cur_page - 1, style);        
+                cur_page -= 1;
+                $('#current_page').html(cur_page);
+            }
+        }
+    );
+
+    $('#next_page').click(
+        
+        function()
+        {
+            if(cur_page < total_page)
+            {
+                set_content(cur_page + 1, style);        
+                cur_page += 1;
+                $('#current_page').html(cur_page);
+            }
+        }
+    );
+}
+);
+
+function get_recmmond()
+{
+$('<div>').load(
+    '/get_recommond/',
+    {'csrfmiddlewaretoken' : '{{csrf_token}}'},
+    function()
+    {
+        var content = "";
+        var data = eval($(this).html());
+        content += "<li style='padding-bottom:3px;margin-bottom:3px;'>" + 
+            "<div class=\"cover\" style='float:left;width:30px;margin-right:6px;padding:4px;'><a href=\"\">" +
+            "<img style='width:30px;height:40px;' src=\""+ data[0].avatar +"\"></a></div>" +
+            "<div class=\"top-list\" style='float:left;width:156px;height:auto'><h2 style='margin-top:2px;margin-bottom:0px;font-size:13px;'>" + 
+            "<a href='/fiction/" + data[0].nid +"'>《"+ data[0].title +"》</a>/<span style='color:#222;font-weight:bold;'>" + data[0].author + "</span></h2>" + 
+            "<p class = 'top-text'>" + data[0].intro + "......</p></div></li>";
+
+        for(var j = 1; data[j] != null;j ++)
+        {
+            content += "<li style='padding-bottom:2px;margin-bottom:2px;'><div class=\"top-list\" style='width:230px;height:auto;'>" +
+                "<span style='font-size:12px;'><span class=\"nub\"></span><a href='/fiction/" + data[j].nid +
+                "'>《"+ data[j].title +"》</a>/<span style='color:#222;font-weight:bold;'>"+ data[j].author +"</span></span>" +
+                "<span class=\"top-text\">" + data[j].intro + "......</span></div></li>";
+        }
+        $('#show_rec').html(content);
+    }
+);
+}
+function save_search_cookies(key_word)
+{
+if($.cookie('search_history') == null)
+{
+    var new_history = '{"key_word":"' + key_word + '","number":"'  + {{total}} + '"}';
+    $.cookie('search_history', new_history, {'expires' : 7});
+}
+else
+{
+    
+    var version = $.browser.version;
+    new_history = $.cookie('search_history');
+    var news = "";
+    if(version != "6.0" || version != "7.0" || version != "8.0")
+    {
+    /*for(var j = 0; j < new_history.length; j ++)
+    {
+        if(new_history[j] != '>' && new_history[j] != '<' && new_history[j] != "\'" && new_history[j] != "\\")
+            news += new_history[j];
+    }
+    new_history = news;
+    var add_in = true;
+    var data = eval('[' + new_history + ']');
+
+    for(var j = 0; data[j] != null; j ++)
+    {
+        if(data[j].key_word == key_word)
+        {
+            add_in = false;
+            break;
+        }
+    }
+    if(add_in)
+    {
+        new_history += ',{"key_word":"' + key_word + '","number":"' + {{total}} + '"}';
+        $.cookie('search_history', new_history);
+    }*/
+    }
+}
+}
+function category_add_click_evt(id)
+{
+$('#cate-'+ id).click(
+    function()
+    {
+        if(style != id)
+        {
+            var tol = $('#all_' + id).html();
+            var tol = parseInt(tol);
+            total_page = parseInt((tol - 1) / 10) + 1;
+            $('#total_page').html(total_page);
+            $('#li-' + style).css('background', '');
+            $('#li-' + id).css('background', '#efefef');
+            style = id;
+            cur_page = 1;
+            set_content(cur_page, style);
+            $('#current_page').html(cur_page);
+        }
+    }
+);
+}
+
+function set_content(cur_page, style)
+{
+$('<div>').load(
+    '/search_for_detail_style/',
+    {'style' : style,
+    'csrfmiddlewaretoken' : '{{csrf_token}}',
+    'page_nid' : cur_page,
+    'q' : '{{key_word}}'},
+    function()
+    {
+        var data = $(this).html();
+        data = eval(data);
+        var content = "";
+        $('#show_area').html("<img src = '/site_media/image/loading.gif'>内容正在加载中...");
+        for(var j = 0; data[j] != null; j ++)
+        {
+            
+            var title = "";
+            for(var k = 0; k < data[j].fiction_title.length; k ++)
+            {
+                var temp = data[j].fiction_title[k];
+                if(temp == '+')
+                    title += '<';
+                else if(temp == '-')
+                    title += '>';
+                else if(temp == '*')
+                    title += '=';
+                else
+                    title += temp;
+            }
+            content += "<li><div class=\"book-intro\"><div class=\"cover\" style='margin-right:10px;width:60px;'>" + 
+                    "<a href=\"\"><img style='height:78px;'src=\"" + data[j].fiction_url + "\" ></a></div>" + 
+                    "<div class=\"book-meta cate\" style='width:88%;' ><div class=\"book-title\" style='font-size:13px;margin-bottom:0px;'>" +
+                    "<a style = 'font-size:13px;'href=\"/fiction/\"" + data[j].fiction_nid + "\">" + title + "</a>" +
+                    "</div><p style='color:#aaa;' ><span class=\"label\">作者：</span><span class=\"lable-text\">" + 
+                    data[j].fiction_author + "</span><span class=\"label\">分类：</span><span class=\"lable-text\">" + 
+                    data[j].fiction_style + "</span><span class=\"label\">评分：</span><span class=\"lable-text\">" + 
+                    data[j].fiction_score + "</span><span class=\"label\">首次收录于：</span><span class=\"lable-text\">" + 
+                    data[j].fiction_site + "</span></p><div class=\"info\" style='font-size:12px;'><p style='font-size:12px;'>" + 
+                    data[j].fiction_intro + "...</p></div></div></div></li>";
+        }
+        $('#show_area').html(content);
+    }
+);
+}
+</script>
+{% endblock %}
